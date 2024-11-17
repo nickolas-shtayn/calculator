@@ -4,7 +4,7 @@ This repository contains a [calculator project](https://www.theodinproject.com/l
 # How to Run It:
 1. **Clone the Repository:** First, make sure you have `Git` installed. Then, clone the repository using:
 ```bash
-git clone git@github.com:nickolas-shtayn/calculator.git
+git clone https://github.com/nickolas-shtayn/calculator.git
 ```
 2. **Open the Project:** Navigate to the cloned project directory:
 ```bash
@@ -15,7 +15,6 @@ cd calculator
 Alternatively, you can visit the [live demo link](https://nickolas-shtayn.github.io/calculator/) to use the calculator directly.
 
 # What This Project Does:
-
 This is a basic, responsive calculator with the following features:
 - Arithmetic operations
 - "A/C" button to clear inputs and reset the calculator
