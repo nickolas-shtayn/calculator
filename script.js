@@ -15,6 +15,23 @@ numPad.addEventListener("click", (e) => {
     display.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
 })
 
+document.addEventListener("keydown", (e) => {
+    let target;
+
+    if (!isNaN(e.key) && e.key !== ' ') {
+        target = e.key;
+    } else {
+        return
+    }
+
+    if (userChoices.operation == ''){
+        userChoices.firstNumber += target
+    } else {
+        userChoices.secondNumber += target
+    }
+    display.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
+})
+
 
 const operations = document.querySelector(".operations")
 operations.addEventListener("click", (e) => {
