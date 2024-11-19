@@ -45,6 +45,8 @@ const display = document.querySelector("#display");
 const misc = document.querySelector("#misc")
 misc.addEventListener("click", (e) => {
     let target = e.target.textContent;
+    let x;
+    let y;
     switch(target) {
         case '=':
             x = Number(userChoices.firstNumber);
