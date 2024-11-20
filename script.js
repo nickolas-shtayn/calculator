@@ -4,16 +4,65 @@ let userChoices = {
     secondNumber: '',
 }
 
-const numPad = document.querySelector(".numbers")
+const numPad = document.querySelector(".buttons")
 numPad.addEventListener("click", (e) => {
     let target = e.target.textContent;
-    if (userChoices.operation == ''){
-        userChoices.firstNumber += target
+    
+    if (!isNaN(target) && target !== ' ') {
+        if (userChoices.operation === '') {
+            userChoices.firstNumber += target;
+        } else {
+            userChoices.secondNumber += target;
+        }
     } else {
-        userChoices.secondNumber += target
+        switch (target) {
+            case '+':
+            case '-':
+            case 'x':
+            case '/':
+                userChoices.operation = target;
+                break;
+            case '=': {
+                let x = Number(userChoices.firstNumber);
+                let y = Number(userChoices.secondNumber);
+                switch(userChoices.operation) {
+                    case '+':
+                        display.textContent = x + y;
+                        break;
+                    case '-':
+                        display.textContent = x - y;
+                        break;
+                    case 'x':
+                        display.textContent = x * y;
+                        break;
+                    case '/':
+                        display.textContent = x / y;
+                        break;
+                }
+            }
+                userChoices.secondNumber = '';
+                userChoices.operation = '';
+                userChoices.firstNumber = display.textContent;
+                return; 
+            case 'C':
+                userChoices.firstNumber = '';
+                userChoices.secondNumber = '';
+                userChoices.operation = '';
+                display.textContent = '';
+                return; 
+            case 'backspace':
+                if (userChoices.operation === ''){
+                    userChoices.firstNumber = userChoices.firstNumber.slice(0,-1);
+                } else if (userChoices.secondNumber === ''){
+                    userChoices.operation = userChoices.operation.slice(0,-1);
+                } else {
+                    userChoices.secondNumber = userChoices.secondNumber.slice(0,-1);
+                }
+                break;
+        }
     }
     display.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
-})
+});
 
 const calculator = document.querySelector("body");
 
@@ -43,20 +92,12 @@ calculator.addEventListener("keydown", (e) => {
 })
 
 
-const operations = document.querySelector(".operations")
-operations.addEventListener("click", (e) => {
-    let target = e.target.textContent;
-    userChoices.operation = target;
-    display.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
-})
+const display = document.querySelector("#display-text");
 
-const display = document.querySelector("#display");
-
-const misc = document.querySelector("#misc")
-misc.addEventListener("click", (e) => {
+numPad.addEventListener("click", (e) => {
     let target = e.target.textContent;
-    let x;
-    let y;
+    let x = userChoices.firstNumber
+    let y = userChoices.secondNumber
     switch(target) {
         case '=':
             x = Number(userChoices.firstNumber);
@@ -68,7 +109,7 @@ misc.addEventListener("click", (e) => {
                 case '-':
                     display.textContent = x - y;
                     break;
-                case '*':
+                case 'x':
                     display.textContent = x * y;
                     break;
                 case '/':
@@ -79,7 +120,7 @@ misc.addEventListener("click", (e) => {
             userChoices.operation = '';
             userChoices.firstNumber = display.textContent;
             break;
-        case 'A/C':
+        case 'C':
             userChoices.firstNumber = '';
             userChoices.secondNumber = '';
             userChoices.operation = '';
