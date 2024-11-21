@@ -77,7 +77,7 @@ misc.addEventListener("click", (e) => {
             }
             userChoices.secondNumber = '';
             userChoices.operation = '';
-            userChoices.firstNumber = display.textContent;
+            userChoices.firstNumber = Number(display.textContent);
             break;
         case 'A/C':
             userChoices.firstNumber = '';
