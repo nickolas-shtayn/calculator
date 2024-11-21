@@ -5,13 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script defer src="script.js"></script>
 </head>
 <body>
    <div id="calculator">
-    <div id="display"></div>
+    <div id="display-holder">
+        <div id="logo">
+            <p>CALCI</p>
+            <div>&#xFE19;</div>
+        </div>
+        <div id="display-text"></div>
+    </div>
     <div class="buttons">
-        <div class="numbers">
             <button id="zero">0</button>
             <button id="one">1</button>
             <button id="two">2</button>
@@ -22,16 +28,15 @@
             <button id="seven">7</button>
             <button id="eight">8</button>
             <button id="nine">9</button>
-        </div>
-        <div class="operations">
             <button id="addition">+</button>
             <button id="subtraction">-</button>
-            <button id="multiplication">*</button>
+            <button id="multiplication">x</button>
             <button id="division">/</button>
-        </div>
-        <div id="misc">
             <button id="equals">=</button>
-            <button id="clear">A/C</button>
+            <button id="backspace"><i class="material-icons" style="font-size:36px">backspace</i></button>
+            <button id="clear">C</button>
+            <button id="decimel">.</button>
+            <button id="percentage">%</button>
         </div>
     </div>
    </div> 
