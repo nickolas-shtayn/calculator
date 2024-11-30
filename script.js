@@ -127,6 +127,7 @@ calculator.addEventListener("keydown", (e) => {
             }
             break;
         case 'Enter':
+        case '=':
             if (userChoices.firstNumber !== '' && userChoices.operation !== '' && userChoices.secondNumber !== '') {
                 switch(userChoices.operation) {
                     case '+':
@@ -160,7 +161,11 @@ calculator.addEventListener("keydown", (e) => {
             break;
         default:
             if (isNaN(target)) {
-                return
+                if (target === "Shift" || target === "Meta") {
+                    ;
+                } else {
+                    alert(`${target} is an invalid input`);   
+                }
             } else if (userChoices.operation == ''){
                 userChoices.firstNumber += target
             } else {
