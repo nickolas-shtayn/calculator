@@ -73,7 +73,7 @@ numPad.addEventListener("click", (e) => {
                 return;
             }
             case '.':
-                if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false){
+                if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false && userChoices.operation == ''){
                     userChoices.firstNumber += '.';
                 } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
                     userChoices.secondNumber += '.';
@@ -188,7 +188,7 @@ calculator.addEventListener("keydown", (e) => {
             }
             break;
             case '.':
-                if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false){
+                if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false && userChoices.operation == ''){
                     userChoices.firstNumber += '.';
                 } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
                     userChoices.secondNumber += '.';
