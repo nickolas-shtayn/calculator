@@ -1,4 +1,5 @@
 const display = document.querySelector("#display-text");
+const history = document.querySelector("#history-div")
 
 let userChoices = {
     firstNumber: '',
@@ -48,6 +49,23 @@ numPad.addEventListener("click", (e) => {
                             display.value = x % y;
                             break;
                     }
+                    const historyEntry = document.createElement("div");
+                    historyEntry.className = "calculations-result";
+
+                    const historyResult = document.createElement("div");
+                    const historyCalculation = document.createElement("div");
+
+                    historyCalculation.className = "calculation";
+                    historyCalculation.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber} =`
+                    
+                    historyResult.className = "result";
+                    historyResult.textContent = display.value;
+
+                    historyEntry.appendChild(historyCalculation);
+                    historyEntry.appendChild(historyResult);
+    
+                    history.appendChild(historyEntry)
+
                     userChoices.secondNumber = '';
                     userChoices.operation = '';
                     userChoices.firstNumber = display.value;
@@ -146,32 +164,50 @@ calculator.addEventListener("keydown", (e) => {
                         display.value = Number(userChoices.firstNumber) % Number(userChoices.secondNumber);
                         break;
                 } 
+                const historyEntry = document.createElement("div");
+                historyEntry.className = "calculations-result";
+
+                const historyResult = document.createElement("div");
+                const historyCalculation = document.createElement("div");
+
+                historyCalculation.className = "calculation";
+                historyCalculation.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber} =`
+                
+                historyResult.className = "result";
+                historyResult.textContent = display.value;
+                
+                historyEntry.appendChild(historyCalculation);
+                historyEntry.appendChild(historyResult);
+
+                history.appendChild(historyEntry)
+
                 userChoices.secondNumber = '';
                 userChoices.operation = '';
                 userChoices.firstNumber = display.value;
                 break;
             }
             break;
-        case '.':
-            if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false){
-                userChoices.firstNumber += '.';
-            } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
-                userChoices.secondNumber += '.';
-            }
-            break;
-        default:
-            if (isNaN(target)) {
-                if (target === "Shift" || target === "Meta") {
-                    ;
-                } else {
-                    alert(`${target} is an invalid input`);   
+            case '.':
+                if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false){
+                    userChoices.firstNumber += '.';
+                } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
+                    userChoices.secondNumber += '.';
                 }
-            } else if (userChoices.operation == ''){
-                userChoices.firstNumber += target
-            } else {
-                userChoices.secondNumber += target
-            }
-            break;
-    }
-    display.value = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
-});
+                break;
+                default:
+                    if (isNaN(target)) {
+                        if (target === "Shift" || target === "Meta") {
+                            ;
+                        } else {
+                            alert(`${target} is an invalid input`);   
+                        }
+                    } else if (userChoices.operation == ''){
+                        userChoices.firstNumber += target
+                    } else {
+                        userChoices.secondNumber += target
+                    }
+                    break;
+                }
+                display.value = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
+            });
+            

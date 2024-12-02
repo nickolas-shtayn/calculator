@@ -144,3 +144,47 @@ button {
     grid-area: 4 / 4 / 6 / 5;
     font-size: 50px; 
 }
+
+#history-div {
+    height: 725px;
+    width: 255px;
+    background-color: #FFC2B2;
+    border-left: #FF4819 1px solid;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#calc-history {
+    display: flex;
+    flex-direction: row;
+}
+
+#history-logo {
+    text-align: center;
+    height: 55px;
+    padding: 27px 27px 0px 27px;
+    font-family: "Fredoka", sans-serif;
+    font-size: 135%;
+    font-weight: 600;
+    color: #FF8E71;
+}
+
+.calculations-result {
+    text-align: right;
+    font-family: "Oswald", sans-serif;
+    padding-right: 21px;
+    padding-bottom: 21px;
+}
+
+.calculation {
+    color: #ff47199a;
+    font-weight: 350;
+    word-spacing: 7px;
+}
+
+.result {
+    color: #FF4819;
+    font-size: 175%;
+    font-weight: 450;
+    margin-top: -5px;
+}
