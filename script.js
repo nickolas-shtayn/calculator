@@ -1,3 +1,5 @@
+const display = document.querySelector("#display-text");
+
 let userChoices = {
     firstNumber: '',
     operation: '',
@@ -11,7 +13,7 @@ numPad.addEventListener("click", (e) => {
     if (!isNaN(target) && target !== ' ') {
         if (userChoices.operation === '') {
             userChoices.firstNumber += target;
-        } else {
+        } else if (userChoices.operation !== ''){
             userChoices.secondNumber += target;
         }
     } else {
@@ -20,35 +22,50 @@ numPad.addEventListener("click", (e) => {
             case '-':
             case 'x':
             case '/':
-                userChoices.operation = target;
+            case '%':
+                if (userChoices.firstNumber !== '') {
+                    userChoices.operation = target;
+                }
                 break;
             case '=': {
-                let x = Number(userChoices.firstNumber);
-                let y = Number(userChoices.secondNumber);
-                switch(userChoices.operation) {
-                    case '+':
-                        display.textContent = x + y;
-                        break;
-                    case '-':
-                        display.textContent = x - y;
-                        break;
-                    case 'x':
-                        display.textContent = x * y;
-                        break;
-                    case '/':
-                        display.textContent = x / y;
-                        break;
+                if (userChoices.firstNumber !== '' && userChoices.operation !== '' && userChoices.secondNumber !== '') {
+                    let x = Number(userChoices.firstNumber);
+                    let y = Number(userChoices.secondNumber);
+                    switch(userChoices.operation) {
+                        case '+':
+                            display.value = x + y;
+                            break;
+                        case '-':
+                            display.value = x - y;
+                            break;
+                        case 'x':
+                            display.value = x * y;
+                            break;
+                        case '/':
+                            display.value = x / y;
+                            break;
+                        case '%':
+                            display.value = x % y;
+                            break;
+                    }
+                    userChoices.secondNumber = '';
+                    userChoices.operation = '';
+                    userChoices.firstNumber = display.value;
                 }
+                return;
             }
-                userChoices.secondNumber = '';
-                userChoices.operation = '';
-                userChoices.firstNumber = display.textContent;
-                return; 
+            case '.':
+                if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false){
+                    userChoices.firstNumber += '.';
+                } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
+                    userChoices.secondNumber += '.';
+                }
+                break;
             case 'C':
                 userChoices.firstNumber = '';
                 userChoices.secondNumber = '';
                 userChoices.operation = '';
-                display.textContent = '';
+                display.value = '';
                 return; 
             case 'backspace':
                 if (userChoices.operation === ''){
@@ -61,10 +78,10 @@ numPad.addEventListener("click", (e) => {
                 break;
         }
     }
-    display.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
+    display.value = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
 });
 
-const calculator = document.querySelector("body");
+const calculator = document.querySelector("#calculator");
 
 calculator.addEventListener("keydown", (e) => {
     let target = e.key;
@@ -78,6 +95,69 @@ calculator.addEventListener("keydown", (e) => {
                 userChoices.secondNumber = userChoices.secondNumber.slice(0,-1)
             }
             break;
+        case 'Delete':
+            userChoices.firstNumber = '';
+            userChoices.secondNumber = '';
+            userChoices.operation = '';
+            display.value = ''; 
+            break
+        case '/':
+            if (userChoices.firstNumber !== '') {
+                userChoices.operation = '/';
+            }
+            break; 
+        case '*':
+            if (userChoices.firstNumber !== '') {
+                userChoices.operation = 'x';
+            }
+            break;
+        case '-':
+            if (userChoices.firstNumber !== '') {
+                userChoices.operation = '-';
+            }
+            break;
+        case '+':
+            if (userChoices.firstNumber !== '') {
+                userChoices.operation = '+';
+            }
+            break;
+        case '%':
+            if (userChoices.firstNumber !== '') {
+                userChoices.operation = '%';
+            }
+            break;
+        case 'Enter':
+            if (userChoices.firstNumber !== '' && userChoices.operation !== '' && userChoices.secondNumber !== '') {
+                switch(userChoices.operation) {
+                    case '+':
+                        display.value = Number(userChoices.firstNumber) + Number(userChoices.secondNumber);
+                        break;
+                    case '-':
+                        display.value = Number(userChoices.firstNumber) - Number(userChoices.secondNumber);
+                        break;
+                    case 'x':
+                        display.value = Number(userChoices.firstNumber) * Number(userChoices.secondNumber);
+                        break;
+                    case '/':
+                        display.value = Number(userChoices.firstNumber) / Number(userChoices.secondNumber);
+                        break;
+                    case '%':
+                        display.value = Number(userChoices.firstNumber) % Number(userChoices.secondNumber);
+                        break;
+                } 
+                userChoices.secondNumber = '';
+                userChoices.operation = '';
+                userChoices.firstNumber = display.value;
+                break;
+            }
+            break;
+        case '.':
+            if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false){
+                userChoices.firstNumber += '.';
+            } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
+                userChoices.secondNumber += '.';
+            }
+            break;
         default:
             if (isNaN(target)) {
                 return
@@ -88,8 +168,5 @@ calculator.addEventListener("keydown", (e) => {
             }
             break;
     }
-    display.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
-})
-
-
-const display = document.querySelector("#display-text");
+    display.value = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
+});
