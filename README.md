@@ -23,5 +23,3 @@ This is a basic, responsive calculator with the following features:
 # Limitations & Future Improvements:
 - [ ] Keyboard support
 - [ ] Design improvements
-
-- [ ] Scotts Great
