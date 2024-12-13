@@ -4,11 +4,16 @@
   "description": "![The Odin Project](https://www.skillfinder.com.au/media/wysiwyg/the-odin-project-logo-skill-finder-partners-page.png) This repository contains a [calculator project](https://www.theodinproject.com/lessons/foundations-calculator) created as part of the Odin Project’s [Foundations course](https://www.theodinproject.com/paths/foundations/courses/foundations). The goal of this project is to demonstrate core frontend development skills, including HTML, CSS, and JavaScript.The calculator is functional but currently lacks some features and design improvements that are planned for future updates.",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/scripts/*.js"
+
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^9.16.0"
-  }
+    "@eslint/js": "^9.16.0",
+    "eslint": "^9.16.0",
+    "globals": "^15.13.0"
+  },
+  "keywords": []
 }
