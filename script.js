@@ -7,6 +7,42 @@ let userChoices = {
     secondNumber: '',
 }
 
+let pastCalculation = {
+    firstNumber: '',
+    operation: '',
+    secondNumber: '',
+    result: '',
+}
+
+let historyStorage = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (Object.entries(localStorage) !== 0){
+        historyStorage = JSON.parse(localStorage.getItem("historyStorage"));
+        for (i = 0; i < historyStorage.length; i++) {
+
+            let calculation = historyStorage[i];
+
+            const historyEntry = document.createElement("div");
+            historyEntry.className = "calculations-result";
+
+            const historyResult = document.createElement("div");
+            const historyCalculation = document.createElement("div");
+
+            historyCalculation.className = "calculation";
+            historyCalculation.textContent = `${calculation.firstNumber} ${calculation.operation} ${calculation.secondNumber} =`
+            
+            historyResult.className = "result";
+            historyResult.textContent = calculation.result;
+
+            historyEntry.appendChild(historyCalculation);
+            historyEntry.appendChild(historyResult);
+
+            history.appendChild(historyEntry)
+        }
+    }
+})
+
 const numPad = document.querySelector(".buttons")
 numPad.addEventListener("click", (e) => {
     let target = e.target.textContent;
@@ -65,6 +101,15 @@ numPad.addEventListener("click", (e) => {
                     historyEntry.appendChild(historyResult);
     
                     history.appendChild(historyEntry)
+
+                    pastCalculation.firstNumber = userChoices.firstNumber;
+                    pastCalculation.secondNumber = userChoices.secondNumber;
+                    pastCalculation.operation = userChoices.operation;
+                    pastCalculation.result = display.value;
+
+                    historyStorage.push({...pastCalculation});
+
+                    localStorage.setItem("historyStorage", JSON.stringify(historyStorage));
 
                     userChoices.secondNumber = '';
                     userChoices.operation = '';
@@ -180,6 +225,15 @@ calculator.addEventListener("keydown", (e) => {
                 historyEntry.appendChild(historyResult);
 
                 history.appendChild(historyEntry)
+
+                pastCalculation.firstNumber = userChoices.firstNumber;
+                pastCalculation.secondNumber = userChoices.secondNumber;
+                pastCalculation.operation = userChoices.operation;
+                pastCalculation.result = display.value;
+
+                historyStorage.push({...pastCalculation});
+
+                localStorage.setItem("historyStorage", JSON.stringify(historyStorage));
 
                 userChoices.secondNumber = '';
                 userChoices.operation = '';
