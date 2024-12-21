@@ -1,5 +1,6 @@
 const display = document.querySelector("#display-text");
 const history = document.querySelector("#history-div")
+const historyClear = document.querySelector("#history-top button")
 
 let userChoices = {
     firstNumber: '',
@@ -268,3 +269,10 @@ calculator.addEventListener("keydown", (e) => {
                 display.value = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
             });
             
+
+
+historyClear.addEventListener("click", () => {
+    localStorage.clear()
+    const historyEntries = document.querySelectorAll(".calculations-result");
+    historyEntries.forEach(historyEntry => historyEntry.remove());
+})
