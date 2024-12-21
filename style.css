@@ -27,6 +27,10 @@
     font-weight: 380;
     font-family: "Oswald", sans-serif;
     color: #FF4819;
+    border: 0px;
+    text-align: right;
+    outline: none; 
+    padding-top: 50px;
 }
 
 button {
