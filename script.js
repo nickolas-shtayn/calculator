@@ -17,7 +17,10 @@ let pastCalculation = {
 let historyStorage = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    if (Object.entries(localStorage) !== 0){
+
+    let savedHistory = localStorage.getItem("historyStorage");
+
+    if (savedHistory){
         historyStorage = JSON.parse(localStorage.getItem("historyStorage"));
         for (i = 0; i < historyStorage.length; i++) {
 
