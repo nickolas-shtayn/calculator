@@ -1,5 +1,6 @@
 const display = document.querySelector("#display-text");
 const history = document.querySelector("#history-div")
+const toggle = document.querySelector("#toggle");
 
 let userChoices = {
     firstNumber: '',
@@ -211,3 +212,17 @@ calculator.addEventListener("keydown", (e) => {
                 display.value = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
             });
             
+
+
+const historyDiv = document.querySelector("#history-div")
+
+toggle.addEventListener("click", () => {
+
+    if (toggle.innerHTML === "▶") {
+        toggle.innerHTML = "▼";
+        historyDiv.style.visibility = "hidden";
+    } else {
+        toggle.innerHTML = "▶";
+        historyDiv.style.visibility = "visible";
+    }
+});
