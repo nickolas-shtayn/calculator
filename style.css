@@ -14,14 +14,9 @@
 }
 
 #display-text {
-    display: flex;
     box-sizing: border-box;
-    justify-content: flex-end;
-    align-items: end;
     height: 192px;
     width: 382px;
-    padding-right: 30px;
-    padding-bottom: 26px;
     background-color: #FFC2B2;
     font-size: 400%; 
     font-weight: 380;
