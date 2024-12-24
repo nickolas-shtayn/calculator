@@ -1,10 +1,51 @@
 const display = document.querySelector("#display-text");
+const history = document.querySelector("#history-div")
+const historyClear = document.querySelector("#history-top button")
 
 let userChoices = {
     firstNumber: '',
     operation: '',
     secondNumber: '',
 }
+
+let pastCalculation = {
+    firstNumber: '',
+    operation: '',
+    secondNumber: '',
+    result: '',
+}
+
+let historyStorage = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    let savedHistory = localStorage.getItem("historyStorage");
+
+    if (savedHistory){
+        historyStorage = JSON.parse(localStorage.getItem("historyStorage"));
+        for (i = 0; i < historyStorage.length; i++) {
+
+            let calculation = historyStorage[i];
+
+            const historyEntry = document.createElement("div");
+            historyEntry.className = "calculations-result";
+
+            const historyResult = document.createElement("div");
+            const historyCalculation = document.createElement("div");
+
+            historyCalculation.className = "calculation";
+            historyCalculation.textContent = `${calculation.firstNumber} ${calculation.operation} ${calculation.secondNumber} =`
+            
+            historyResult.className = "result";
+            historyResult.textContent = calculation.result;
+
+            historyEntry.appendChild(historyCalculation);
+            historyEntry.appendChild(historyResult);
+
+            history.appendChild(historyEntry)
+        }
+    }
+})
 
 const numPad = document.querySelector(".buttons")
 numPad.addEventListener("click", (e) => {
@@ -48,6 +89,32 @@ numPad.addEventListener("click", (e) => {
                             display.value = x % y;
                             break;
                     }
+                    const historyEntry = document.createElement("div");
+                    historyEntry.className = "calculations-result";
+
+                    const historyResult = document.createElement("div");
+                    const historyCalculation = document.createElement("div");
+
+                    historyCalculation.className = "calculation";
+                    historyCalculation.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber} =`
+                    
+                    historyResult.className = "result";
+                    historyResult.textContent = display.value;
+
+                    historyEntry.appendChild(historyCalculation);
+                    historyEntry.appendChild(historyResult);
+    
+                    history.appendChild(historyEntry)
+
+                    pastCalculation.firstNumber = userChoices.firstNumber;
+                    pastCalculation.secondNumber = userChoices.secondNumber;
+                    pastCalculation.operation = userChoices.operation;
+                    pastCalculation.result = display.value;
+
+                    historyStorage.push({...pastCalculation});
+
+                    localStorage.setItem("historyStorage", JSON.stringify(historyStorage));
+
                     userChoices.secondNumber = '';
                     userChoices.operation = '';
                     userChoices.firstNumber = display.value;
@@ -55,7 +122,7 @@ numPad.addEventListener("click", (e) => {
                 return;
             }
             case '.':
-                if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false){
+                if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false && userChoices.operation == ''){
                     userChoices.firstNumber += '.';
                 } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
                     userChoices.secondNumber += '.';
@@ -146,32 +213,78 @@ calculator.addEventListener("keydown", (e) => {
                         display.value = Number(userChoices.firstNumber) % Number(userChoices.secondNumber);
                         break;
                 } 
+                const historyEntry = document.createElement("div");
+                historyEntry.className = "calculations-result";
+
+                const historyResult = document.createElement("div");
+                const historyCalculation = document.createElement("div");
+
+                historyCalculation.className = "calculation";
+                historyCalculation.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber} =`
+                
+                historyResult.className = "result";
+                historyResult.textContent = display.value;
+                
+                historyEntry.appendChild(historyCalculation);
+                historyEntry.appendChild(historyResult);
+
+                history.appendChild(historyEntry)
+
+                pastCalculation.firstNumber = userChoices.firstNumber;
+                pastCalculation.secondNumber = userChoices.secondNumber;
+                pastCalculation.operation = userChoices.operation;
+                pastCalculation.result = display.value;
+
+                historyStorage.push({...pastCalculation});
+
+                localStorage.setItem("historyStorage", JSON.stringify(historyStorage));
+
                 userChoices.secondNumber = '';
                 userChoices.operation = '';
                 userChoices.firstNumber = display.value;
                 break;
             }
             break;
-        case '.':
-            if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false){
-                userChoices.firstNumber += '.';
-            } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
-                userChoices.secondNumber += '.';
-            }
-            break;
-        default:
-            if (isNaN(target)) {
-                if (target === "Shift" || target === "Meta") {
-                    ;
-                } else {
-                    alert(`${target} is an invalid input`);   
+            case '.':
+                if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false && userChoices.operation == ''){
+                    userChoices.firstNumber += '.';
+                } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
+                    userChoices.secondNumber += '.';
                 }
-            } else if (userChoices.operation == ''){
-                userChoices.firstNumber += target
-            } else {
-                userChoices.secondNumber += target
-            }
-            break;
+                break;
+                default:
+                    if (isNaN(target)) {
+                        if (target === "Shift" || target === "Meta") {
+                            ;
+                        } else {
+                            alert(`${target} is an invalid input`);   
+                        }
+                    } else if (userChoices.operation == ''){
+                        userChoices.firstNumber += target
+                    } else {
+                        userChoices.secondNumber += target
+                    }
+                    break;
+                }
+                display.value = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
+            });
+            
+
+
+historyClear.addEventListener("click", () => {
+    localStorage.clear()
+    const historyEntries = document.querySelectorAll(".calculations-result");
+    historyEntries.forEach(historyEntry => historyEntry.remove());
+})
+
+history.addEventListener("click", (event) => {
+    const targetEntry = event.target.closest(".calculations-result");
+    if (targetEntry) {
+        const calculation = targetEntry.querySelector(".calculation").textContent;
+        const parts = calculation.split(" ");
+        userChoices.firstNumber = parts[0];
+        userChoices.operation = parts[1];
+        userChoices.secondNumber = parts[2];
+        display.value = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
     }
-    display.value = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
 });
