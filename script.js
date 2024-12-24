@@ -276,3 +276,15 @@ historyClear.addEventListener("click", () => {
     const historyEntries = document.querySelectorAll(".calculations-result");
     historyEntries.forEach(historyEntry => historyEntry.remove());
 })
+
+history.addEventListener("click", (event) => {
+    const targetEntry = event.target.closest(".calculations-result");
+    if (targetEntry) {
+        const calculation = targetEntry.querySelector(".calculation").textContent;
+        const parts = calculation.split(" ");
+        userChoices.firstNumber = parts[0];
+        userChoices.operation = parts[1];
+        userChoices.secondNumber = parts[2];
+        display.value = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
+    }
+});
