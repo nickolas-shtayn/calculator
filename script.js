@@ -68,7 +68,7 @@ numPad.addEventListener("click", (e) => {
 
                     userChoices.secondNumber = '';
                     userChoices.operation = '';
-                    userChoices.firstNumber = display.value;
+                    userChoices.firstNumber = '';
                 }
                 return;
             }
@@ -183,7 +183,7 @@ calculator.addEventListener("keydown", (e) => {
 
                 userChoices.secondNumber = '';
                 userChoices.operation = '';
-                userChoices.firstNumber = display.value;
+                userChoices.firstNumber = '';
                 break;
             }
             break;
