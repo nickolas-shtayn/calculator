@@ -1,6 +1,7 @@
 const display = document.querySelector("#display-text");
 const history = document.querySelector("#history-div")
 
+// store everything in strings so that we can handle multi-digit input and decimal points before converting to Number
 let userChoices = {
     firstNumber: '',
     operation: '',
@@ -11,7 +12,6 @@ const numPad = document.querySelector(".buttons")
 numPad.addEventListener("click", (e) => {
     let target = e.target.textContent;
     
-    // conditional to check if digit should be added to first or second number
     if (!isNaN(target) && target !== ' ') {
         if (userChoices.operation === '') {
             userChoices.firstNumber += target;
@@ -50,8 +50,6 @@ numPad.addEventListener("click", (e) => {
                             display.value = x % y;
                             break;
                     }
-                    const historyEntry = document.createElement("div");
-                    historyEntry.className = "calculations-result";
 
                     const historyResult = document.createElement("div");
                     const historyCalculation = document.createElement("div");
@@ -62,11 +60,10 @@ numPad.addEventListener("click", (e) => {
                     historyResult.className = "result";
                     historyResult.textContent = display.value;
 
-                    historyEntry.appendChild(historyCalculation);
-                    historyEntry.appendChild(historyResult);
-    
-                    history.appendChild(historyEntry)
+                    history.appendChild(historyCalculation);
+                    history.appendChild(historyResult);
 
+                    // reset userChoices so that new input starts a fresh calculation
                     userChoices.secondNumber = '';
                     userChoices.operation = '';
                     userChoices.firstNumber = '';
@@ -102,6 +99,7 @@ numPad.addEventListener("click", (e) => {
 
 const calculator = document.querySelector("#calculator");
 
+// mirror the same logic as button clicks, but for keyboard input
 calculator.addEventListener("keydown", (e) => {
     let target = e.key;
     switch (target) {
@@ -165,9 +163,6 @@ calculator.addEventListener("keydown", (e) => {
                         display.value = Number(userChoices.firstNumber) % Number(userChoices.secondNumber);
                         break;
                 } 
-                const historyEntry = document.createElement("div");
-                historyEntry.className = "calculations-result";
-
                 const historyResult = document.createElement("div");
                 const historyCalculation = document.createElement("div");
 
@@ -176,12 +171,11 @@ calculator.addEventListener("keydown", (e) => {
                 
                 historyResult.className = "result";
                 historyResult.textContent = display.value;
-                
-                historyEntry.appendChild(historyCalculation);
-                historyEntry.appendChild(historyResult);
 
-                history.appendChild(historyEntry)
+                history.appendChild(historyCalculation);
+                history.appendChild(historyResult);
 
+                // reset userChoices so that new input starts a fresh calculation
                 userChoices.secondNumber = '';
                 userChoices.operation = '';
                 userChoices.firstNumber = '';
@@ -189,6 +183,7 @@ calculator.addEventListener("keydown", (e) => {
             }
             break;
             case '.':
+                // conditional to check against multiple decimals
                 if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false && userChoices.operation == ''){
                     userChoices.firstNumber += '.';
                 } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
@@ -196,6 +191,7 @@ calculator.addEventListener("keydown", (e) => {
                 }
                 break;
                 default:
+                    // alert user if they pressed a non-supported key (besides function keys)
                     if (isNaN(target)) {
                         if (target === "Shift" || target === "Meta") {
                             ;
