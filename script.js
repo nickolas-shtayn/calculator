@@ -11,6 +11,7 @@ const numPad = document.querySelector(".buttons")
 numPad.addEventListener("click", (e) => {
     let target = e.target.textContent;
     
+    // conditional to check if digit should be added to first or second number
     if (!isNaN(target) && target !== ' ') {
         if (userChoices.operation === '') {
             userChoices.firstNumber += target;
