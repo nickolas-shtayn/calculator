@@ -1,19 +1,31 @@
 const display = document.querySelector("#display-text");
+const prevCalc = document.querySelector("#previous-calculation");
 
 let userChoices = {
     firstNumber: '',
     operation: '',
     secondNumber: '',
-}
+};
 
-const numPad = document.querySelector(".buttons")
+let calculationDone = false;
+
+const numPad = document.querySelector(".buttons");
 numPad.addEventListener("click", (e) => {
     let target = e.target.textContent;
     
     if (!isNaN(target) && target !== ' ') {
+        if (calculationDone) {
+            prevCalc.textContent = '';
+            userChoices.firstNumber = target;
+            userChoices.operation = '';
+            userChoices.secondNumber = '';
+            display.value = userChoices.firstNumber;
+            calculationDone = false;
+            return;
+        }
         if (userChoices.operation === '') {
             userChoices.firstNumber += target;
-        } else if (userChoices.operation !== ''){
+        } else {
             userChoices.secondNumber += target;
         }
     } else {
@@ -23,6 +35,10 @@ numPad.addEventListener("click", (e) => {
             case 'x':
             case '/':
             case '%':
+                if (calculationDone) {
+                    prevCalc.textContent = '';
+                    calculationDone = false;
+                }
                 if (userChoices.firstNumber !== '') {
                     userChoices.operation = target;
                 }
@@ -48,16 +64,27 @@ numPad.addEventListener("click", (e) => {
                             display.value = x % y;
                             break;
                     }
+                    prevCalc.textContent = `${x} ${userChoices.operation} ${y}`;
                     userChoices.secondNumber = '';
                     userChoices.operation = '';
                     userChoices.firstNumber = display.value;
+                    calculationDone = true;
                 }
                 return;
             }
             case '.':
-                if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false){
+                if (calculationDone) {
+                    prevCalc.textContent = '';
+                    userChoices.firstNumber = '0.';
+                    userChoices.operation = '';
+                    userChoices.secondNumber = '';
+                    display.value = userChoices.firstNumber;
+                    calculationDone = false;
+                    return;
+                }
+                if (userChoices.operation === '' && userChoices.firstNumber !== '' && !userChoices.firstNumber.includes(".")) {
                     userChoices.firstNumber += '.';
-                } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
+                } else if (userChoices.operation !== '' && userChoices.secondNumber !== '' && !userChoices.secondNumber.includes(".")) {
                     userChoices.secondNumber += '.';
                 }
                 break;
@@ -66,14 +93,25 @@ numPad.addEventListener("click", (e) => {
                 userChoices.secondNumber = '';
                 userChoices.operation = '';
                 display.value = '';
-                return; 
+                prevCalc.textContent = '';
+                calculationDone = false;
+                return;
             case 'backspace':
+                if (calculationDone) {
+                    prevCalc.textContent = '';
+                    userChoices.firstNumber = '';
+                    userChoices.secondNumber = '';
+                    userChoices.operation = '';
+                    display.value = '';
+                    calculationDone = false;
+                    return;
+                }
                 if (userChoices.operation === ''){
-                    userChoices.firstNumber = userChoices.firstNumber.slice(0,-1);
+                    userChoices.firstNumber = userChoices.firstNumber.slice(0, -1);
                 } else if (userChoices.secondNumber === ''){
-                    userChoices.operation = userChoices.operation.slice(0,-1);
+                    userChoices.operation = userChoices.operation.slice(0, -1);
                 } else {
-                    userChoices.secondNumber = userChoices.secondNumber.slice(0,-1);
+                    userChoices.secondNumber = userChoices.secondNumber.slice(0, -1);
                 }
                 break;
         }
@@ -82,46 +120,76 @@ numPad.addEventListener("click", (e) => {
 });
 
 const calculator = document.querySelector("#calculator");
-
 calculator.addEventListener("keydown", (e) => {
     let target = e.key;
     switch (target) {
         case 'Backspace':
-            if (userChoices.operation === ''){
-                userChoices.firstNumber = userChoices.firstNumber.slice(0,-1);
-            } else if (userChoices.secondNumber === ''){
-                userChoices.operation = userChoices.operation.slice(0,-1);
+            if (calculationDone) {
+                prevCalc.textContent = '';
+                userChoices.firstNumber = '';
+                userChoices.secondNumber = '';
+                userChoices.operation = '';
+                display.value = '';
+                calculationDone = false;
+                break;
+            }
+            if (userChoices.operation === '') {
+                userChoices.firstNumber = userChoices.firstNumber.slice(0, -1);
+            } else if (userChoices.secondNumber === '') {
+                userChoices.operation = userChoices.operation.slice(0, -1);
             } else {
-                userChoices.secondNumber = userChoices.secondNumber.slice(0,-1)
+                userChoices.secondNumber = userChoices.secondNumber.slice(0, -1);
             }
             break;
         case 'Delete':
             userChoices.firstNumber = '';
             userChoices.secondNumber = '';
             userChoices.operation = '';
-            display.value = ''; 
-            break
+            display.value = '';
+            prevCalc.textContent = '';
+            calculationDone = false;
+            break;
         case '/':
+            if (calculationDone) {
+                prevCalc.textContent = '';
+                calculationDone = false;
+            }
             if (userChoices.firstNumber !== '') {
                 userChoices.operation = '/';
             }
-            break; 
+            break;
         case '*':
+            if (calculationDone) {
+                prevCalc.textContent = '';
+                calculationDone = false;
+            }
             if (userChoices.firstNumber !== '') {
                 userChoices.operation = 'x';
             }
             break;
         case '-':
+            if (calculationDone) {
+                prevCalc.textContent = '';
+                calculationDone = false;
+            }
             if (userChoices.firstNumber !== '') {
                 userChoices.operation = '-';
             }
             break;
         case '+':
+            if (calculationDone) {
+                prevCalc.textContent = '';
+                calculationDone = false;
+            }
             if (userChoices.firstNumber !== '') {
                 userChoices.operation = '+';
             }
             break;
         case '%':
+            if (calculationDone) {
+                prevCalc.textContent = '';
+                calculationDone = false;
+            }
             if (userChoices.firstNumber !== '') {
                 userChoices.operation = '%';
             }
@@ -129,33 +197,45 @@ calculator.addEventListener("keydown", (e) => {
         case 'Enter':
         case '=':
             if (userChoices.firstNumber !== '' && userChoices.operation !== '' && userChoices.secondNumber !== '') {
+                let x = Number(userChoices.firstNumber);
+                let y = Number(userChoices.secondNumber);
                 switch(userChoices.operation) {
                     case '+':
-                        display.value = Number(userChoices.firstNumber) + Number(userChoices.secondNumber);
+                        display.value = x + y;
                         break;
                     case '-':
-                        display.value = Number(userChoices.firstNumber) - Number(userChoices.secondNumber);
+                        display.value = x - y;
                         break;
                     case 'x':
-                        display.value = Number(userChoices.firstNumber) * Number(userChoices.secondNumber);
+                        display.value = x * y;
                         break;
                     case '/':
-                        display.value = Number(userChoices.firstNumber) / Number(userChoices.secondNumber);
+                        display.value = x / y;
                         break;
                     case '%':
-                        display.value = Number(userChoices.firstNumber) % Number(userChoices.secondNumber);
+                        display.value = x % y;
                         break;
-                } 
+                }
+                prevCalc.textContent = `${x} ${userChoices.operation} ${y}`;
                 userChoices.secondNumber = '';
                 userChoices.operation = '';
                 userChoices.firstNumber = display.value;
-                break;
+                calculationDone = true;
             }
             break;
         case '.':
-            if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false){
+            if (calculationDone) {
+                prevCalc.textContent = '';
+                userChoices.firstNumber = '0.';
+                userChoices.operation = '';
+                userChoices.secondNumber = '';
+                display.value = userChoices.firstNumber;
+                calculationDone = false;
+                break;
+            }
+            if (userChoices.operation === '' && userChoices.firstNumber !== '' && !userChoices.firstNumber.includes(".")) {
                 userChoices.firstNumber += '.';
-            } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
+            } else if (userChoices.operation !== '' && userChoices.secondNumber !== '' && !userChoices.secondNumber.includes(".")) {
                 userChoices.secondNumber += '.';
             }
             break;
@@ -164,12 +244,23 @@ calculator.addEventListener("keydown", (e) => {
                 if (target === "Shift" || target === "Meta") {
                     ;
                 } else {
-                    alert(`${target} is an invalid input`);   
+                    alert(`${target} is an invalid input`);
                 }
-            } else if (userChoices.operation == ''){
-                userChoices.firstNumber += target
             } else {
-                userChoices.secondNumber += target
+                if (calculationDone) {
+                    prevCalc.textContent = '';
+                    userChoices.firstNumber = target;
+                    userChoices.operation = '';
+                    userChoices.secondNumber = '';
+                    display.value = userChoices.firstNumber;
+                    calculationDone = false;
+                } else {
+                    if (userChoices.operation === '') {
+                        userChoices.firstNumber += target;
+                    } else {
+                        userChoices.secondNumber += target;
+                    }
+                }
             }
             break;
     }
