@@ -217,12 +217,8 @@ calculator.addEventListener("keydown", (e) => {
 const historyDiv = document.querySelector("#history-div")
 
 toggle.addEventListener("click", () => {
-
-    if (toggle.innerHTML === "▶") {
-        toggle.innerHTML = "▼";
-        historyDiv.style.visibility = "hidden";
-    } else {
-        toggle.innerHTML = "▶";
-        historyDiv.style.visibility = "visible";
-    }
+    toggle.classList.toggle("open");
+    toggle.classList.toggle("collapsed");
+    historyDiv.classList.toggle("open");
+    historyDiv.classList.toggle("collapsed");
 });

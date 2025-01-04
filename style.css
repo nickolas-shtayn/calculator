@@ -11,6 +11,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: #FF8E71;
+    z-index: 2; 
 }
 
 #display-text {
@@ -158,6 +159,8 @@ button {
     border-left: #FF4819 1px solid;
     overflow-y: auto;
     overflow-x: hidden;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1; 
 }
 
 #calc-history {
@@ -193,4 +196,36 @@ button {
     font-size: 175%;
     font-weight: 450;
     margin-top: -5px;
+}
+
+#toggle {
+    transition: transform 0.3s ease-in-out;
+    transform-origin: center; 
+    display: inline-flex;
+    justify-content: center;
+    align-items: center; 
+    height: 48px; 
+    width: 48px; 
+    vertical-align: middle;
+    fill: #FF8E71;
+}
+
+#toggle:hover {
+    transform: scale(1.2);    
+}
+
+#toggle.open {
+    transform: rotate(0deg);
+}
+
+#toggle.collapsed {
+    transform: rotate(90deg);
+}
+
+#history-div.open {
+    transform: translateX(-255px);
+}
+
+#history0div.collapsed {
+    transform: translateX(0);
 }
