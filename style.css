@@ -1,16 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&display=swap');
+:root {
+    --base-color: #FF8E71;
+    --accent-color: #FFC2B2;
+    --result-color: #FF4819;
+}
 
 #calculator {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    height: 725px;
-    width: 382px;
     justify-content: space-between;
     align-items: center;
-    background-color: #FF8E71;
+    height: 725px;
+    width: 382px;
+    background-color: var(--base-color);
 }
 
 #display-text {
@@ -22,21 +25,21 @@
     width: 382px;
     padding-right: 30px;
     padding-bottom: 26px;
-    background-color: #FFC2B2;
+    padding-top: 50px;
+    border: 0px;
+    background-color: var(--accent-color);
+    color: var(--result-color);
     font-size: 400%; 
     font-weight: 380;
     font-family: "Oswald", sans-serif;
-    color: #FF4819;
-    border: 0px;
     text-align: right;
     outline: none; 
-    padding-top: 50px;
 }
 
 button {
-    color: white;
-    background-color: #FF8E71;
     border: 0px;
+    color: white;
+    background-color: var(--base-color);
     font-size: 230%;
     font-family: "Nunito Sans", sans-serif;
 }
@@ -48,17 +51,17 @@ button {
 }
 
 #logo {
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    box-sizing: border-box;
     height: 55px;
     padding: 27px;
+    color: var(--base-color);
+    background-color: var(--accent-color);
     font-family: "Fredoka", sans-serif;
     font-size: 135%;
     font-weight: 600;
-    color: #FF8E71;
-    background-color: #FFC2B2;
 }
 
 #logo p {
