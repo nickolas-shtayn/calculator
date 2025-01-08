@@ -1,3 +1,5 @@
+const helper = require('./helpers')
+
 const display = document.querySelector("#display-text");
 
 let userChoices = {
