@@ -3,6 +3,25 @@
     --base-color: #FF8E71;
     --accent-color: #FFC2B2;
     --result-color: #FF4819;
+
+    --calculator-width: clamp(375px, 90vw, 668.5px);
+    --calculator-height: calc(var(--calculator-width) * 1.894);
+
+    --display-height: calc(var(--calculator-height) * 0.34);
+    --logo-height: calc(var(--display-height) * 0.2);
+    --buttons-height: calc(var(--calculator-height) * 0.66);
+
+    --font-display: 'Oswald', sans-serif;
+    --font-buttons: 'Nunito Sans', sans-serif;
+    --font-logo: 'Fredoka', sans-serif;
+
+    --fs-buttons: calc(var(--calculator-width) * 0.09625);
+    --fs-logo: calc(var(--calculator-width) * 0.0565);
+    --fs-display: calc(var(--calculator-width) * .175); 
+    --fs-equals: calc(var(--calculator-width) * 0.14);
+    --fs-decimal: calc(var(--calculator-width) * 0.17);
+
+    --display-spacing: calc(var(--calculator-width) * 0.0707);
 }
 
 #calculator {
@@ -11,76 +30,75 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 725px;
-    width: 382px;
+    height: var(--calculator-height);
+    width: var(--calculator-width);
     background-color: var(--base-color);
 }
 
-#display-text {
-    display: flex;
-    box-sizing: border-box;
-    justify-content: flex-end;
-    align-items: end;
-    height: 192px;
-    width: 382px;
-    padding-right: 30px;
-    padding-bottom: 26px;
-    padding-top: 50px;
-    border: 0px;
-    background-color: var(--accent-color);
-    color: var(--result-color);
-    font-size: 400%; 
-    font-weight: 380;
-    font-family: "Oswald", sans-serif;
-    text-align: right;
-    outline: none; 
+#display-holder {
+    height: var(--display-height)
 }
 
-button {
-    border: 0px;
-    color: white;
-    background-color: var(--base-color);
-    font-size: 230%;
-    font-family: "Nunito Sans", sans-serif;
-}
-
-.buttons {
-    display: grid;
-    grid-template-rows: repeat(5, 95.6px);
-    grid-template-columns: repeat(4, 95.5px);
-}
-
-#logo {
+#display-holder > #logo {
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 55px;
-    padding: 27px;
+    height: var(--logo-height);
+    padding: var(--display-spacing);
+    padding-bottom: 0px;
     color: var(--base-color);
     background-color: var(--accent-color);
-    font-family: "Fredoka", sans-serif;
-    font-size: 135%;
+    font-family: var(--font-logo); 
+    font-size: var(--fs-logo);
     font-weight: 600;
 }
 
-#logo p {
+#logo > p {
     margin-top: 0px;
 }
 
-#logo div {
+#logo > div {
    margin-right: -10px; 
    font-size: 110%;
    font-weight: 900;
 }
 
-#backspace {
-    size: 60%;
+#display-holder > #display-text {
+    display: flex;
+    box-sizing: border-box;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: calc(var(--calculator-height) * 0.34 * 0.8);
+    width: var(--calculator-width);
+    padding-right: var(--display-spacing); 
+    padding-bottom: 0px;
+    padding-top: calc(var(--calculator-height) * 0.34 * 0.2);
+    border: 0px;
+    background-color: var(--accent-color);
+    color: var(--result-color);
+    font-size: var(--fs-display); 
+    font-weight: 380;
+    font-family: var(--font-display);
+    text-align: right;
+    outline: none;
 }
 
-#clear {
-    grid-area: 1 / 1 / 2 / 2;
+#numpad {
+    display: grid;
+    grid-template: repeat(5, 1fr) / repeat(4, 1fr);
+    width: 100%;
+    height: var(--buttons-height); 
 }
+
+#numpad > button {
+    border: none;
+    color: white;
+    background-color: var(--base-color);
+    font-size: var(--fs-buttons);
+    font-family: var(--font-buttons) 
+}
+
 
 #percentage {
     grid-area: 1 / 2 / 2 / 3;
@@ -142,13 +160,22 @@ button {
     grid-area: 5/ 1 / 6 / 2;
 }
 
-#decimel {
+#decimal {
     grid-area: 5 / 2 / 6 / 3;
-    font-size: 60px;
-
+    font-size: var(--fs-decimal);
 }
+
+#backspace {
+    grid-area: 5 / 3 / 6 / 4;
+}
+
+#backspace > svg {
+    width: calc(var(--calculator-width) * .11); 
+    height: calc(var(--calculator-width) * .11);
+}
+  
 
 #equals {
     grid-area: 4 / 4 / 6 / 5;
-    font-size: 50px; 
+    font-size: var(--fs-equals) 
 }
