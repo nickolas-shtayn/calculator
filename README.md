@@ -21,5 +21,8 @@ This is a basic, responsive calculator with the following features:
 - Basic UI
 
 # Limitations & Future Improvements:
-- [ ] Keyboard support
-- [ ] Design improvements
+- [x] Keyboard support
+- [x] Design improvements
+- [x] History
+- [x] Update user experience with display
+- [x] Update user experience with button feedback
