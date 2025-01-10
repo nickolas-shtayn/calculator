@@ -1,5 +1,7 @@
 const display = document.querySelector("#display-text");
+const history = document.querySelector("#history-div")
 
+// store everything in strings so that we can handle multi-digit input and decimal points before converting to Number
 let userChoices = {
     firstNumber: '',
     operation: '',
@@ -48,14 +50,28 @@ numPad.addEventListener("click", (e) => {
                             display.value = x % y;
                             break;
                     }
+
+                    const historyResult = document.createElement("div");
+                    const historyCalculation = document.createElement("div");
+
+                    historyCalculation.className = "calculation";
+                    historyCalculation.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber} =`
+                    
+                    historyResult.className = "result";
+                    historyResult.textContent = display.value;
+
+                    history.appendChild(historyCalculation);
+                    history.appendChild(historyResult);
+
+                    // reset userChoices so that new input starts a fresh calculation
                     userChoices.secondNumber = '';
                     userChoices.operation = '';
-                    userChoices.firstNumber = display.value;
+                    userChoices.firstNumber = '';
                 }
                 return;
             }
             case '.':
-                if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false){
+                if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false && userChoices.operation == ''){
                     userChoices.firstNumber += '.';
                 } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
                     userChoices.secondNumber += '.';
@@ -83,6 +99,7 @@ numPad.addEventListener("click", (e) => {
 
 const calculator = document.querySelector("#calculator");
 
+// mirror the same logic as button clicks, but for keyboard input
 calculator.addEventListener("keydown", (e) => {
     let target = e.key;
     switch (target) {
@@ -146,32 +163,48 @@ calculator.addEventListener("keydown", (e) => {
                         display.value = Number(userChoices.firstNumber) % Number(userChoices.secondNumber);
                         break;
                 } 
+                const historyResult = document.createElement("div");
+                const historyCalculation = document.createElement("div");
+
+                historyCalculation.className = "calculation";
+                historyCalculation.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber} =`
+                
+                historyResult.className = "result";
+                historyResult.textContent = display.value;
+
+                history.appendChild(historyCalculation);
+                history.appendChild(historyResult);
+
+                // reset userChoices so that new input starts a fresh calculation
                 userChoices.secondNumber = '';
                 userChoices.operation = '';
-                userChoices.firstNumber = display.value;
+                userChoices.firstNumber = '';
                 break;
             }
             break;
-        case '.':
-            if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false){
-                userChoices.firstNumber += '.';
-            } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
-                userChoices.secondNumber += '.';
-            }
-            break;
-        default:
-            if (isNaN(target)) {
-                if (target === "Shift" || target === "Meta") {
-                    ;
-                } else {
-                    alert(`${target} is an invalid input`);   
+            case '.':
+                // conditional to check against multiple decimals
+                if (userChoices.firstNumber != '' && userChoices.firstNumber.includes(".") === false && userChoices.operation == ''){
+                    userChoices.firstNumber += '.';
+                } else if (userChoices.secondNumber != '' && userChoices.secondNumber.includes(".") === false){
+                    userChoices.secondNumber += '.';
                 }
-            } else if (userChoices.operation == ''){
-                userChoices.firstNumber += target
-            } else {
-                userChoices.secondNumber += target
-            }
-            break;
-    }
-    display.value = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
-});
+                break;
+                default:
+                    // alert user if they pressed a non-supported key (besides function keys)
+                    if (isNaN(target)) {
+                        if (target === "Shift" || target === "Meta") {
+                            ;
+                        } else {
+                            alert(`${target} is an invalid input`);   
+                        }
+                    } else if (userChoices.operation == ''){
+                        userChoices.firstNumber += target
+                    } else {
+                        userChoices.secondNumber += target
+                    }
+                    break;
+                }
+                display.value = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
+            });
+            
