@@ -1,5 +1,6 @@
 const display = document.querySelector("#display-text");
 const historyFeature = document.querySelector("#history-div");
+const toggle = document.querySelector("#toggle");
 
 // store everything in strings so that we can handle multi-digit input and decimal points before converting to Number
 let userChoices = {
@@ -51,6 +52,9 @@ numPad.addEventListener("click", (e) => {
           break;
         }
 
+        const historyEntry = document.createElement("div");
+        historyEntry.className = "calculations-result";
+
         const historyResult = document.createElement("div");
         const historyCalculation = document.createElement("div");
 
@@ -62,6 +66,8 @@ numPad.addEventListener("click", (e) => {
 
         historyFeature.appendChild(historyCalculation);
         historyFeature.appendChild(historyResult);
+
+        history.appendChild(historyEntry);
 
         // reset userChoices so that new input starts a fresh calculation
         userChoices.secondNumber = '';
@@ -163,6 +169,10 @@ calculator.addEventListener("keydown", (e) => {
         display.value = Number(userChoices.firstNumber) % Number(userChoices.secondNumber);
         break;
       } 
+
+      const historyEntry = document.createElement("div");
+      historyEntry.className = "calculations-result";
+
       const historyResult = document.createElement("div");
       const historyCalculation = document.createElement("div");
 
@@ -174,6 +184,8 @@ calculator.addEventListener("keydown", (e) => {
 
       history.appendChild(historyCalculation);
       history.appendChild(historyResult);
+
+      history.appendChild(historyEntry);
 
       // reset userChoices so that new input starts a fresh calculation
       userChoices.secondNumber = '';
@@ -208,3 +220,11 @@ calculator.addEventListener("keydown", (e) => {
   display.value = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
 });
             
+const historyDiv = document.querySelector("#history-div");
+
+toggle.addEventListener("click", () => {
+  toggle.classList.toggle("open");
+  toggle.classList.toggle("collapsed");
+  historyDiv.classList.toggle("open");
+  historyDiv.classList.toggle("collapsed");
+});
