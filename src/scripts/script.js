@@ -1,6 +1,7 @@
 const display = document.querySelector("#display-text");
 const historyFeature = document.querySelector("#history-div");
 const toggle = document.querySelector("#toggle");
+const historyClear = document.querySelector("#history-top button");
 
 // store everything in strings so that we can handle multi-digit input and decimal points before converting to Number
 let userChoices = {
@@ -8,6 +9,45 @@ let userChoices = {
   operation: '',
   secondNumber: '',
 };
+
+let pastCalculation = {
+  firstNumber: '',
+  operation: '',
+  secondNumber: '',
+  result: '',
+};
+
+let historyStorage = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  let savedHistory = localStorage.getItem("historyStorage");
+
+  if (savedHistory){
+    historyStorage = JSON.parse(localStorage.getItem("historyStorage"));
+    for (let i = 0; i < historyStorage.length; i++) {
+
+      let calculation = historyStorage[i];
+
+      const historyEntry = document.createElement("div");
+      historyEntry.className = "calculations-result";
+
+      const historyResult = document.createElement("div");
+      const historyCalculation = document.createElement("div");
+
+      historyCalculation.className = "calculation";
+      historyCalculation.textContent = `${calculation.firstNumber} ${calculation.operation} ${calculation.secondNumber} =`
+        
+      historyResult.className = "result";
+      historyResult.textContent = calculation.result;
+
+      historyEntry.appendChild(historyCalculation);
+      historyEntry.appendChild(historyResult);
+
+      historyFeature.appendChild(historyEntry);
+    }
+  }
+});
 
 const numPad = document.querySelector(".buttons");
 numPad.addEventListener("click", (e) => {
@@ -64,10 +104,19 @@ numPad.addEventListener("click", (e) => {
         historyResult.className = "result";
         historyResult.textContent = display.value;
 
-        historyFeature.appendChild(historyCalculation);
-        historyFeature.appendChild(historyResult);
+        historyEntry.appendChild(historyCalculation);
+        historyEntry.appendChild(historyResult);
 
-        history.appendChild(historyEntry);
+        historyFeature.appendChild(historyEntry);
+
+        pastCalculation.firstNumber = userChoices.firstNumber;
+        pastCalculation.secondNumber = userChoices.secondNumber;
+        pastCalculation.operation = userChoices.operation;
+        pastCalculation.result = display.value;
+
+        historyStorage.push({...pastCalculation});
+
+        localStorage.setItem("historyStorage", JSON.stringify(historyStorage));
 
         // reset userChoices so that new input starts a fresh calculation
         userChoices.secondNumber = '';
@@ -182,10 +231,19 @@ calculator.addEventListener("keydown", (e) => {
       historyResult.className = "result";
       historyResult.textContent = display.value;
 
-      history.appendChild(historyCalculation);
-      history.appendChild(historyResult);
+      historyEntry.appendChild(historyCalculation);
+      historyEntry.appendChild(historyResult);
 
-      history.appendChild(historyEntry);
+      historyFeature.appendChild(historyEntry);
+
+      pastCalculation.firstNumber = userChoices.firstNumber;
+      pastCalculation.secondNumber = userChoices.secondNumber;
+      pastCalculation.operation = userChoices.operation;
+      pastCalculation.result = display.value;
+
+      historyStorage.push({...pastCalculation});
+
+      localStorage.setItem("historyStorage", JSON.stringify(historyStorage));
 
       // reset userChoices so that new input starts a fresh calculation
       userChoices.secondNumber = '';
@@ -227,4 +285,22 @@ toggle.addEventListener("click", () => {
   toggle.classList.toggle("collapsed");
   historyDiv.classList.toggle("open");
   historyDiv.classList.toggle("collapsed");
+});
+
+historyClear.addEventListener("click", () => {
+  localStorage.clear();
+  const historyEntries = document.querySelectorAll(".calculations-result");
+  historyEntries.forEach(historyEntry => historyEntry.remove());
+});
+
+historyFeature.addEventListener("click", (event) => {
+  const targetEntry = event.target.closest(".calculations-result");
+  if (targetEntry) {
+    const calculation = targetEntry.querySelector(".calculation").textContent;
+    const parts = calculation.split(" ");
+    userChoices.firstNumber = parts[0];
+    userChoices.operation = parts[1];
+    userChoices.secondNumber = parts[2];
+    display.value = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
+  }
 });
