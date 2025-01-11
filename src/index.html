@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Calculator</title>
+   <link rel="stylesheet" href="./styles/style.css">
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   <script defer src="./scripts/script.js"></script>
+</head>
+<body>
+   <div id="calc-history">
+       <div id="calculator">
+           <div id="display-holder">
+               <div id="logo">
+                   <p>CALCI</p>
+                   <div id="toggle">
+                       <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 0 24 24" width="48">
+                           <path d="M10 17l5-5-5-5v10z"/>
+                           <path d="M0 24V0h24v24H0z" fill="none"/>
+                       </svg>
+                   </div>
+               </div>
+               <div id="input-container">
+                   <div id="previous-calculation"></div>
+                   <input type="text" id="display-text" readonly />
+               </div> 
+           </div>
+           <div class="buttons">
+               <button id="zero">0</button>
+               <button id="one">1</button>
+               <button id="two">2</button>
+               <button id="three">3</button>
+               <button id="four">4</button>
+               <button id="five">5</button>
+               <button id="six">6</button>
+               <button id="seven">7</button>
+               <button id="eight">8</button>
+               <button id="nine">9</button>
+               <button id="addition">+</button>
+               <button id="subtraction">-</button>
+               <button id="multiplication">x</button>
+               <button id="division">/</button>
+               <button id="equals">=</button>
+               <button id="backspace">
+                   <i class="material-icons" style="font-size:36px">backspace</i>
+               </button>
+               <button id="clear">C</button>
+               <button id="decimel">.</button>
+               <button id="percentage">%</button>
+           </div>
+       </div>
+       <div id="history-div">
+           <div id="history-top">
+               <div id="history-logo">HISTORY</div>
+               <button>
+                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                       <path d="M3 6h18"></path>
+                       <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                       <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                   </svg>
+               </button>
+           </div>
+       </div>
+   </div> 
+</body>
+</html>
