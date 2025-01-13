@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const historyCalculation = document.createElement("div");
 
       historyCalculation.className = "calculation";
-      historyCalculation.textContent = `${calculation.firstNumber} ${calculation.operation} ${calculation.secondNumber} =`
+      historyCalculation.textContent = `${calculation.firstNumber} ${calculation.operation} ${calculation.secondNumber} =`;
         
       historyResult.className = "result";
       historyResult.textContent = calculation.result;
