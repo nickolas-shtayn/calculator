@@ -6,6 +6,29 @@ const prevCalc = document.querySelector("#previous-calculation");
 
 let calculationDone = false;
 
+const keyToButtonId = {
+  '0': '#zero',
+  '1': '#one',
+  '2': '#two',
+  '3': '#three',
+  '4': '#four',
+  '5': '#five',
+  '6': '#six',
+  '7': '#seven',
+  '8': '#eight',
+  '9': '#nine',
+  '+': '#addition',
+  '-': '#subtraction',
+  '*': '#multiplication',
+  '/': '#division',
+  '%': '#percentage',
+  '.': '#decimel',
+  '=': '#equals',
+  'Enter': '#equals',
+  'Backspace': '#backspace' 
+};
+
+
 // store everything in strings so that we can handle multi-digit input and decimal points before converting to Number
 let userChoices = {
   firstNumber: '',
@@ -54,7 +77,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const numPad = document.querySelector(".buttons");
 numPad.addEventListener("click", (e) => {
-  let target = e.target.textContent;
+  const clickedButton = e.target.closest("button");
+
+  clickedButton.classList.remove("animate-bg");
+  void clickedButton.offsetWidth;
+  clickedButton.classList.add("animate-bg");
+ 
+  let target = clickedButton.textContent;
     
   if (!isNaN(target) && target !== ' ') {
     if (calculationDone) {
@@ -195,6 +224,17 @@ const calculator = document.querySelector("#calculator");
 // mirror the same logic as button clicks, but for keyboard input
 calculator.addEventListener("keydown", (e) => {
   let target = e.key;
+
+  const buttonSelector = keyToButtonId[target];
+  if (buttonSelector) {
+    const buttonElem = document.querySelector(buttonSelector);
+    if (buttonElem) {
+      buttonElem.classList.remove("animate-bg");
+      void buttonElem.offsetWidth;
+      buttonElem.classList.add("animate-bg");
+    }
+  }
+
   switch (target) {
   case 'Backspace':
     if (calculationDone) {
