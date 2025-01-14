@@ -1,3 +1,5 @@
+import { updateDisplay, showResult } from "./helpers.js";
+
 const display = document.querySelector("#display-text");
 const historyFeature = document.querySelector("#history-div");
 const toggle = document.querySelector("#toggle");
@@ -5,6 +7,12 @@ const historyClear = document.querySelector("#history-top button");
 const prevCalc = document.querySelector("#previous-calculation");
 
 let calculationDone = false;
+
+let userChoices = {
+  firstNumber: '',
+  operation: '',
+  secondNumber: '',
+};
 
 const keyToButtonId = {
   '0': '#zero',
@@ -30,11 +38,7 @@ const keyToButtonId = {
 
 
 // store everything in strings so that we can handle multi-digit input and decimal points before converting to Number
-let userChoices = {
-  firstNumber: '',
-  operation: '',
-  secondNumber: '',
-};
+
 
 let pastCalculation = {
   firstNumber: '',
@@ -87,12 +91,9 @@ numPad.addEventListener("click", (e) => {
     
   if (!isNaN(target) && target !== ' ') {
     if (calculationDone) {
-      prevCalc.textContent = '';
       userChoices.firstNumber = target;
-      userChoices.operation = '';
-      userChoices.secondNumber = '';
       display.value = userChoices.firstNumber;
-      calculationDone = false;
+      updateDisplay();
       return;
     }
     if (userChoices.operation === '') {
@@ -167,6 +168,9 @@ numPad.addEventListener("click", (e) => {
         // reset userChoices so that new input starts a fresh calculation
         userChoices.secondNumber = '';
         userChoices.operation = '';
+        // userChoices.firstNumber = display.value;
+        // calculationDone = true;
+        showResult();
         userChoices.firstNumber = display.value;
         calculationDone = true;
       }
@@ -174,12 +178,9 @@ numPad.addEventListener("click", (e) => {
     }
     case '.':
       if (calculationDone) {
-        prevCalc.textContent = '';
         userChoices.firstNumber = '0.';
-        userChoices.operation = '';
-        userChoices.secondNumber = '';
         display.value = userChoices.firstNumber;
-        calculationDone = false;
+        updateDisplay();
         return;
       }
       if (userChoices.operation === '' && userChoices.firstNumber !== '' && !userChoices.firstNumber.includes(".")) {
@@ -190,11 +191,12 @@ numPad.addEventListener("click", (e) => {
       break;
     case 'C':
       userChoices.firstNumber = '';
-      userChoices.secondNumber = '';
-      userChoices.operation = '';
+      // userChoices.secondNumber = '';
+      // userChoices.operation = '';
       display.value = '';
-      prevCalc.textContent = '';
-      calculationDone = false;
+      // prevCalc.textContent = '';
+      // calculationDone = false;
+      updateDisplay();
       return; 
     case 'backspace':
       if (calculationDone) {
