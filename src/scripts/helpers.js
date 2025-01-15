@@ -9,3 +9,22 @@ export function showResult(userChoices, calculationDone, display) {
   userChoices.firstNumber = display.value;
   calculationDone = true;
 }
+
+export function createHistoryEntry(userChoices, display, historyFeature) {
+    const historyEntry = document.createElement("div");
+    historyEntry.className = "calculations-result";
+
+    const historyResult = document.createElement("div");
+    const historyCalculation = document.createElement("div");
+
+    historyCalculation.className = "calculation";
+    historyCalculation.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber} =`;
+
+    historyResult.className = "result";
+    historyResult.textContent = display.value;
+
+    historyEntry.appendChild(historyCalculation);
+    historyEntry.appendChild(historyResult);
+
+    historyFeature.appendChild(historyEntry);
+}

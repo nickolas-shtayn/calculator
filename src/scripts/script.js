@@ -1,4 +1,4 @@
-import { updateDisplay, showResult } from "./helpers.js";
+import { updateDisplay, showResult , createHistoryEntry} from "./helpers.js";
 
 const display = document.querySelector("#display-text");
 const historyFeature = document.querySelector("#history-div");
@@ -140,22 +140,7 @@ numPad.addEventListener("click", (e) => {
 
         prevCalc.textContent = `${x} ${userChoices.operation} ${y}`;
 
-        const historyEntry = document.createElement("div");
-        historyEntry.className = "calculations-result";
-
-        const historyResult = document.createElement("div");
-        const historyCalculation = document.createElement("div");
-
-        historyCalculation.className = "calculation";
-        historyCalculation.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber} =`;
-        
-        historyResult.className = "result";
-        historyResult.textContent = display.value;
-
-        historyEntry.appendChild(historyCalculation);
-        historyEntry.appendChild(historyResult);
-
-        historyFeature.appendChild(historyEntry);
+        createHistoryEntry(userChoices, display, historyFeature);
 
         pastCalculation.firstNumber = userChoices.firstNumber;
         pastCalculation.secondNumber = userChoices.secondNumber;
@@ -314,22 +299,7 @@ calculator.addEventListener("keydown", (e) => {
       } 
       prevCalc.textContent = `${x} ${userChoices.operation} ${y}`;
 
-      const historyEntry = document.createElement("div");
-      historyEntry.className = "calculations-result";
-
-      const historyResult = document.createElement("div");
-      const historyCalculation = document.createElement("div");
-
-      historyCalculation.className = "calculation";
-      historyCalculation.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber} =`;
-      
-      historyResult.className = "result";
-      historyResult.textContent = display.value;
-
-      historyEntry.appendChild(historyCalculation);
-      historyEntry.appendChild(historyResult);
-
-      historyFeature.appendChild(historyEntry);
+      createHistoryEntry(userChoices, display, historyFeature);
 
       pastCalculation.firstNumber = userChoices.firstNumber;
       pastCalculation.secondNumber = userChoices.secondNumber;
