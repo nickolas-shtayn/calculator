@@ -1,4 +1,4 @@
-import { updateDisplay, showResult , createHistoryEntry, storeHistoryEntry, evaluateExpression} from "./helpers.js";
+import { updateDisplay, showResult , createHistoryEntry, storeHistoryEntry, evaluateExpression, handleDecimal, handleBackspace} from "./helpers.js";
 
 const display = document.querySelector("#display-text");
 const historyFeature = document.querySelector("#history-div");
@@ -135,17 +135,7 @@ numPad.addEventListener("click", (e) => {
       return;
     }
     case '.':
-      if (calculationDone) {
-        userChoices.firstNumber = '0.';
-        display.value = userChoices.firstNumber;
-        updateDisplay(userChoices, calculationDone, prevCalc);
-        return;
-      }
-      if (userChoices.operation === '' && userChoices.firstNumber !== '' && !userChoices.firstNumber.includes(".")) {
-        userChoices.firstNumber += '.';
-      } else if (userChoices.operation !== '' && userChoices.secondNumber !== '' && !userChoices.secondNumber.includes(".")) {
-        userChoices.secondNumber += '.';
-      }
+      handleDecimal(userChoices, display, calculationDone, prevCalc);
       break;
     case 'C':
       userChoices.firstNumber = '';
@@ -153,19 +143,7 @@ numPad.addEventListener("click", (e) => {
       updateDisplay(userChoices, calculationDone, prevCalc);
       return; 
     case 'backspace':
-      if (calculationDone) {
-        userChoices.firstNumber = '';
-        display.value = '';
-        updateDisplay(userChoices, calculationDone, prevCalc);
-        return;
-      }
-      if (userChoices.operation === ''){
-        userChoices.firstNumber = userChoices.firstNumber.slice(0, -1);
-      } else if (userChoices.secondNumber === ''){
-        userChoices.operation = userChoices.operation.slice(0, -1);
-      } else {
-        userChoices.secondNumber = userChoices.secondNumber.slice(0, -1);
-      }
+      handleBackspace(userChoices, display, calculationDone, prevCalc);
       break;
     }
   }
@@ -190,19 +168,7 @@ calculator.addEventListener("keydown", (e) => {
 
   switch (target) {
   case 'Backspace':
-    if (calculationDone) {
-      userChoices.firstNumber = '';
-      display.value = '';
-      updateDisplay(userChoices, calculationDone, prevCalc);
-      break;
-    }
-    if (userChoices.operation === '') {
-      userChoices.firstNumber = userChoices.firstNumber.slice(0, -1);
-    } else if (userChoices.secondNumber === '') {
-      userChoices.operation = userChoices.operation.slice(0, -1);
-    } else {
-      userChoices.secondNumber = userChoices.secondNumber.slice(0, -1);
-    }
+    handleBackspace(userChoices, display, calculationDone, prevCalc);
     break;
   case 'Delete':
     userChoices.firstNumber = '';
@@ -268,17 +234,7 @@ calculator.addEventListener("keydown", (e) => {
     break;
   case '.':
     // conditional to check against multiple decimals
-    if (calculationDone) {
-      userChoices.firstNumber = '0.';
-      display.value = userChoices.firstNumber;
-      updateDisplay(userChoices, calculationDone, prevCalc);
-      break;
-    }
-    if (userChoices.operation === '' && userChoices.firstNumber !== '' && !userChoices.firstNumber.includes(".")) {
-      userChoices.firstNumber += '.';
-    } else if (userChoices.operation !== '' && userChoices.secondNumber !== '' && !userChoices.secondNumber.includes(".")) {
-      userChoices.secondNumber += '.';
-    }
+    handleDecimal(userChoices, display, calculationDone, prevCalc);
     break;
   default:
     // alert user if they pressed a non-supported key (besides function keys)

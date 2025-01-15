@@ -60,3 +60,40 @@ export function evaluateExpression(userChoices, display) {
     break;
   }
 }
+
+export function handleDecimal(userChoices, display, calculationDone, prevCalc) {
+  if (calculationDone) {
+    userChoices.firstNumber = '0.';
+    display.value = userChoices.firstNumber;
+    updateDisplay(userChoices, calculationDone, prevCalc);
+    return false;
+  }
+
+  if (userChoices.operation === '' && userChoices.firstNumber !== '' && !userChoices.firstNumber.includes(".")) {
+    userChoices.firstNumber += '.';
+  } 
+
+  else if (userChoices.operation !== '' && userChoices.secondNumber !== '' && !userChoices.secondNumber.includes(".")) {
+    userChoices.secondNumber += '.';
+  }
+  return true;
+}
+
+export function handleBackspace(userChoices, display, calculationDone, prevCalc) {
+  if (calculationDone) {
+    userChoices.firstNumber = '';
+    display.value = '';
+    updateDisplay(userChoices, calculationDone, prevCalc);
+    return false;
+  }
+
+  if (userChoices.operation === '') {
+    userChoices.firstNumber = userChoices.firstNumber.slice(0, -1);
+  } else if (userChoices.secondNumber === '') {
+    userChoices.operation = userChoices.operation.slice(0, -1);
+  } else {
+    userChoices.secondNumber = userChoices.secondNumber.slice(0, -1);
+  }
+    
+  return true;
+}
