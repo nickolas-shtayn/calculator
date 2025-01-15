@@ -87,13 +87,13 @@ numPad.addEventListener("click", (e) => {
   void clickedButton.offsetWidth;
   clickedButton.classList.add("animate-bg");
  
-  let target = clickedButton.textContent;
+  let target = clickedButton.textContent.trim();
     
   if (!isNaN(target) && target !== ' ') {
     if (calculationDone) {
       userChoices.firstNumber = target;
       display.value = userChoices.firstNumber;
-      updateDisplay();
+      updateDisplay(userChoices, calculationDone, prevCalc);
       return;
     }
     if (userChoices.operation === '') {
@@ -168,9 +168,7 @@ numPad.addEventListener("click", (e) => {
         // reset userChoices so that new input starts a fresh calculation
         userChoices.secondNumber = '';
         userChoices.operation = '';
-        // userChoices.firstNumber = display.value;
-        // calculationDone = true;
-        showResult();
+        showResult(userChoices, calculationDone, display);
         userChoices.firstNumber = display.value;
         calculationDone = true;
       }
@@ -180,7 +178,7 @@ numPad.addEventListener("click", (e) => {
       if (calculationDone) {
         userChoices.firstNumber = '0.';
         display.value = userChoices.firstNumber;
-        updateDisplay();
+        updateDisplay(userChoices, calculationDone, prevCalc);
         return;
       }
       if (userChoices.operation === '' && userChoices.firstNumber !== '' && !userChoices.firstNumber.includes(".")) {
@@ -191,21 +189,14 @@ numPad.addEventListener("click", (e) => {
       break;
     case 'C':
       userChoices.firstNumber = '';
-      // userChoices.secondNumber = '';
-      // userChoices.operation = '';
       display.value = '';
-      // prevCalc.textContent = '';
-      // calculationDone = false;
-      updateDisplay();
+      updateDisplay(userChoices, calculationDone, prevCalc);
       return; 
     case 'backspace':
       if (calculationDone) {
-        prevCalc.textContent = '';
         userChoices.firstNumber = '';
-        userChoices.secondNumber = '';
-        userChoices.operation = '';
         display.value = '';
-        calculationDone = false;
+        updateDisplay(userChoices, calculationDone, prevCalc);
         return;
       }
       if (userChoices.operation === ''){
@@ -240,12 +231,9 @@ calculator.addEventListener("keydown", (e) => {
   switch (target) {
   case 'Backspace':
     if (calculationDone) {
-      prevCalc.textContent = '';
       userChoices.firstNumber = '';
-      userChoices.secondNumber = '';
-      userChoices.operation = '';
       display.value = '';
-      calculationDone = false;
+      updateDisplay(userChoices, calculationDone, prevCalc);
       break;
     }
     if (userChoices.operation === '') {
@@ -258,11 +246,8 @@ calculator.addEventListener("keydown", (e) => {
     break;
   case 'Delete':
     userChoices.firstNumber = '';
-    userChoices.secondNumber = '';
-    userChoices.operation = '';
     display.value = '';
-    prevCalc.textContent = '';
-    calculationDone = false;
+    updateDisplay(userChoices, calculationDone, prevCalc);
     break;
   case '/':
     if (calculationDone) {
@@ -358,20 +343,16 @@ calculator.addEventListener("keydown", (e) => {
       // reset userChoices so that new input starts a fresh calculation
       userChoices.secondNumber = '';
       userChoices.operation = '';
-      userChoices.firstNumber = display.value;
-      calculationDone = true;
+      showResult(userChoices, calculationDone, display);
       break;
     }
     break;
   case '.':
     // conditional to check against multiple decimals
     if (calculationDone) {
-      prevCalc.textContent = '';
       userChoices.firstNumber = '0.';
-      userChoices.operation = '';
-      userChoices.secondNumber = '';
       display.value = userChoices.firstNumber;
-      calculationDone = false;
+      updateDisplay(userChoices, calculationDone, prevCalc);
       break;
     }
     if (userChoices.operation === '' && userChoices.firstNumber !== '' && !userChoices.firstNumber.includes(".")) {
@@ -390,12 +371,10 @@ calculator.addEventListener("keydown", (e) => {
       }
     } else {
       if (calculationDone) {
-        prevCalc.textContent = '';
         userChoices.firstNumber = target;
-        userChoices.operation = '';
-        userChoices.secondNumber = '';
         display.value = userChoices.firstNumber;
-        calculationDone = false;
+        updateDisplay(userChoices, calculationDone, prevCalc);
+
       } else {
         if (userChoices.operation === '') {
           userChoices.firstNumber += target;
