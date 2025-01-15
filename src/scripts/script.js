@@ -1,4 +1,4 @@
-import { updateDisplay, showResult , createHistoryEntry} from "./helpers.js";
+import { updateDisplay, showResult , createHistoryEntry, storeHistoryEntry} from "./helpers.js";
 
 const display = document.querySelector("#display-text");
 const historyFeature = document.querySelector("#history-div");
@@ -141,14 +141,7 @@ numPad.addEventListener("click", (e) => {
         prevCalc.textContent = `${x} ${userChoices.operation} ${y}`;
 
         createHistoryEntry(userChoices, display, historyFeature);
-
-        pastCalculation.firstNumber = userChoices.firstNumber;
-        pastCalculation.secondNumber = userChoices.secondNumber;
-        pastCalculation.operation = userChoices.operation;
-        pastCalculation.result = display.value;
-
-        historyStorage.push({...pastCalculation});
-        localStorage.setItem("historyStorage", JSON.stringify(historyStorage));
+        storeHistoryEntry(userChoices, pastCalculation, historyStorage, display);
 
         // reset userChoices so that new input starts a fresh calculation
         userChoices.secondNumber = '';
@@ -300,15 +293,7 @@ calculator.addEventListener("keydown", (e) => {
       prevCalc.textContent = `${x} ${userChoices.operation} ${y}`;
 
       createHistoryEntry(userChoices, display, historyFeature);
-
-      pastCalculation.firstNumber = userChoices.firstNumber;
-      pastCalculation.secondNumber = userChoices.secondNumber;
-      pastCalculation.operation = userChoices.operation;
-      pastCalculation.result = display.value;
-
-      historyStorage.push({...pastCalculation});
-
-      localStorage.setItem("historyStorage", JSON.stringify(historyStorage));
+      storeHistoryEntry(userChoices, pastCalculation, historyStorage, display);
 
       // reset userChoices so that new input starts a fresh calculation
       userChoices.secondNumber = '';
