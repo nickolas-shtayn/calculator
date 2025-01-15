@@ -1,4 +1,4 @@
-import { updateDisplay, showResult , createHistoryEntry, storeHistoryEntry} from "./helpers.js";
+import { updateDisplay, showResult , createHistoryEntry, storeHistoryEntry, evaluateExpression} from "./helpers.js";
 
 const display = document.querySelector("#display-text");
 const historyFeature = document.querySelector("#history-div");
@@ -118,27 +118,9 @@ numPad.addEventListener("click", (e) => {
       break;
     case '=': {
       if (userChoices.firstNumber !== '' && userChoices.operation !== '' && userChoices.secondNumber !== '') {
-        let x = Number(userChoices.firstNumber);
-        let y = Number(userChoices.secondNumber);
-        switch(userChoices.operation) {
-        case '+':
-          display.value = x + y;
-          break;
-        case '-':
-          display.value = x - y;
-          break;
-        case 'x':
-          display.value = x * y;
-          break;
-        case '/':
-          display.value = x / y;
-          break;
-        case '%':
-          display.value = x % y;
-          break;
-        }
+        evaluateExpression(userChoices, display);
 
-        prevCalc.textContent = `${x} ${userChoices.operation} ${y}`;
+        prevCalc.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
 
         createHistoryEntry(userChoices, display, historyFeature);
         storeHistoryEntry(userChoices, pastCalculation, historyStorage, display);
@@ -271,26 +253,8 @@ calculator.addEventListener("keydown", (e) => {
   case 'Enter':
   case '=':
     if (userChoices.firstNumber !== '' && userChoices.operation !== '' && userChoices.secondNumber !== '') {
-      let x = Number(userChoices.firstNumber);
-      let y = Number(userChoices.secondNumber);
-      switch(userChoices.operation) {
-      case '+':
-        display.value = x + y;
-        break;
-      case '-':
-        display.value = x - y;
-        break;
-      case 'x':
-        display.value = x * y;
-        break;
-      case '/':
-        display.value = x / y;
-        break;
-      case '%':
-        display.value = x % y;
-        break;
-      } 
-      prevCalc.textContent = `${x} ${userChoices.operation} ${y}`;
+      evaluateExpression(userChoices, display);
+      prevCalc.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber}`;
 
       createHistoryEntry(userChoices, display, historyFeature);
       storeHistoryEntry(userChoices, pastCalculation, historyStorage, display);

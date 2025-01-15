@@ -38,3 +38,25 @@ export function storeHistoryEntry(userChoices, pastCalculation, historyStorage, 
   historyStorage.push({...pastCalculation});
   localStorage.setItem("historyStorage", JSON.stringify(historyStorage));
 }
+
+export function evaluateExpression(userChoices, display) {
+  let x = Number(userChoices.firstNumber);
+  let y = Number(userChoices.secondNumber);
+  switch(userChoices.operation) {
+  case '+':
+    display.value = x + y;
+    break;
+  case '-':
+    display.value = x - y;
+    break;
+  case 'x':
+    display.value = x * y;
+    break;
+  case '/':
+    display.value = x / y;
+    break;
+  case '%':
+    display.value = x % y;
+    break;
+  }
+}
