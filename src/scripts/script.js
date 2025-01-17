@@ -6,6 +6,25 @@ const prevCalc = document.querySelector("#previous-calculation");
 
 let calculationDone = false;
 
+const makeInputNumbers = (userChoices) => {
+  return { x: Number(userChoices.firstNumber), y: Number(userChoices.secondNumber)}
+}
+
+const testFunc = (userChoices, x, y) => {
+  switch(userChoices.operation) {
+    case '+':
+      return  x + y;
+    case '-':
+      return  x - y;
+    case 'x':
+      return  x * y;
+    case '/':
+      return  x / y;
+    case '%':
+      return  x % y;
+    }
+}
+
 const keyToButtonId = {
   '0': '#zero',
   '1': '#one',
@@ -117,25 +136,7 @@ numPad.addEventListener("click", (e) => {
       break;
     case '=': {
       if (userChoices.firstNumber !== '' && userChoices.operation !== '' && userChoices.secondNumber !== '') {
-        let x = Number(userChoices.firstNumber);
-        let y = Number(userChoices.secondNumber);
-        switch(userChoices.operation) {
-        case '+':
-          display.value = x + y;
-          break;
-        case '-':
-          display.value = x - y;
-          break;
-        case 'x':
-          display.value = x * y;
-          break;
-        case '/':
-          display.value = x / y;
-          break;
-        case '%':
-          display.value = x % y;
-          break;
-        }
+        const { x, y} = makeInputNumbers(userChoices)
 
         prevCalc.textContent = `${x} ${userChoices.operation} ${y}`;
 
@@ -149,7 +150,7 @@ numPad.addEventListener("click", (e) => {
         historyCalculation.textContent = `${userChoices.firstNumber} ${userChoices.operation} ${userChoices.secondNumber} =`;
         
         historyResult.className = "result";
-        historyResult.textContent = display.value;
+        historyResult.textContent = testFunc(userChoices, x, y);
 
         historyEntry.appendChild(historyCalculation);
         historyEntry.appendChild(historyResult);
@@ -159,7 +160,7 @@ numPad.addEventListener("click", (e) => {
         pastCalculation.firstNumber = userChoices.firstNumber;
         pastCalculation.secondNumber = userChoices.secondNumber;
         pastCalculation.operation = userChoices.operation;
-        pastCalculation.result = display.value;
+        pastCalculation.result = testFunc(display.value, x, y);
 
         historyStorage.push({...pastCalculation});
         localStorage.setItem("historyStorage", JSON.stringify(historyStorage));
@@ -167,7 +168,7 @@ numPad.addEventListener("click", (e) => {
         // reset userChoices so that new input starts a fresh calculation
         userChoices.secondNumber = '';
         userChoices.operation = '';
-        userChoices.firstNumber = display.value;
+        userChoices.firstNumber = testFunc(display.value);
         calculationDone = true;
       }
       return;
