@@ -85,7 +85,7 @@ numPad.addEventListener("click", (e) => {
   void clickedButton.offsetWidth;
   clickedButton.classList.add("animate-bg");
  
-  let target = clickedButton.textContent;
+  let target = clickedButton.textContent.trim();
     
   if (!isNaN(target) && target !== ' ') {
     if (calculationDone) {
