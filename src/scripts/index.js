@@ -1,3 +1,5 @@
+import "../styles/style.css"
+
 const display = document.querySelector("#display-text");
 const historyFeature = document.querySelector("#history-div");
 const toggle = document.querySelector("#toggle");
