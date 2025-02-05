@@ -49,10 +49,41 @@ console.log("Before setting:", getOperation());
 setOperation("+");
 console.log("After setting:", getOperation());
 
+const calculate = () => {
+  const num1 = Number(firstNumber);
+  const num2 = Number(secondNumber);
 
-// setOperation(value) {
-//   this.#operation = value;
-// }
+  switch (operation) {
+  case "+": result = num1 + num2; break;
+  case "-": result = num1 - num2; break;
+  case 'x':
+  case "*": result = num1 * num2; break;
+  case "/":
+    if (num2 === 0) {
+      console.error("Cannot divide by zero");
+      return;
+    }
+    result = num1 / num2;
+    break;
+  case "%":
+    if (num2 === 0) {
+      console.error("Cannot find module of zero");
+      return;
+    }
+    result = num1 % num2;
+    break;
+  }
+};
+
+// REMOVE
+firstNumber = '10';
+secondNumber = '5';
+console.log("Testing calculate() with 10 and 5:");
+['+', '-', '*', '/'].forEach(op => {
+  operation = op;
+  calculate();
+  console.log(op + ":", getResult());
+});
 
 // calculate() {
 
