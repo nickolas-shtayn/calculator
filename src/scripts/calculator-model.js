@@ -11,28 +11,43 @@ const getResult = () => result;
 
 console.log("first:", getFirstNumber(), "second:", getSecondNumber(), "operation:", getOperation(), "result:", getResult());
 
-// appendToFirstNumber(value) {
-//   if (value === '.' && this.#firstNumber.includes('.')) {
-//     return;
-//   }
-//   if (value === '.' && this.#firstNumber === '') {
-//     this.#firstNumber = '0.';
-//     return;
-//   }
-//   this.#firstNumber += value;
-// }
+const appendToFirstNumber = (value) => {
+  if (value === '.' && firstNumber.includes('.')) return;
+  if (value === '.' && firstNumber === '') {
+    firstNumber = '0.';
+    return;
+  }
+  firstNumber += value;
+};
+
+// REMOVE
+console.log("Before appending:", getFirstNumber());
+appendToFirstNumber(2);
+console.log("After appending:", getFirstNumber());
+
+const appendToSecondNumber = (value) => {
+  if (value === '.' && secondNumber.includes('.')) return;
+  if (value === '.' && secondNumber === '') {
+    secondNumber = '0.';
+    return;
+  }
+  secondNumber += value;
+};
+
+// REMOVE
+console.log("Before appending:", getSecondNumber());
+appendToSecondNumber(3);
+console.log("After appending:", getSecondNumber());
 
 
-// appendToSecondNumber(value) {
-//   if (value === '.' && this.#secondNumber.includes('.')) {
-//     return;
-//   }
-//   if (value === '.' && this.#secondNumber === '') {
-//     this.#secondNumber = '0.';
-//     return;
-//   }
-//   this.#secondNumber += value;
-// }
+const setOperation = (value) => {
+  operation = value;
+};
+
+// REMOVE
+console.log("Before setting:", getOperation());
+setOperation("+");
+console.log("After setting:", getOperation());
 
 
 // setOperation(value) {
