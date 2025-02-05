@@ -306,3 +306,34 @@ button {
 #history-top button:hover {
     color: #FF4819;
 }
+
+.calculations-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px;
+    position: relative;
+}
+
+.history-content {
+    flex-grow: 1;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.delete-entry {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.delete-entry:hover {
+    opacity: 1;
+}
+
+.delete-entry svg {
+    color: #FF4819;
+}
