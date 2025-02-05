@@ -1,100 +1,90 @@
-export class CalculatorModel {
-  #firstNumber = '';
-  #secondNumber = '';
-  #operation = '';
-  #result = '';
+let firstNumber = '';
+let secondNumber = '';
+let operation = '';
+let result = '';
 
 
-  get firstNumber() {
-    return this.#firstNumber;
-  }
+const getFirstNumber = () => firstNumber;
+const getSecondNumber = () => secondNumber;
+const getOperation = () => operation;
+const getResult = () => result;
 
-  appendToFirstNumber(value) {
-    if (value === '.' && this.#firstNumber.includes('.')) {
-      return;
-    }
-    if (value === '.' && this.#firstNumber === '') {
-      this.#firstNumber = '0.';
-      return;
-    }
-    this.#firstNumber += value;
-  }
+console.log("first:", getFirstNumber(), "second:", getSecondNumber(), "operation:", getOperation(), "result:", getResult());
+
+// appendToFirstNumber(value) {
+//   if (value === '.' && this.#firstNumber.includes('.')) {
+//     return;
+//   }
+//   if (value === '.' && this.#firstNumber === '') {
+//     this.#firstNumber = '0.';
+//     return;
+//   }
+//   this.#firstNumber += value;
+// }
 
 
-  get secondNumber() {
-    return this.#secondNumber;
-  }
+// appendToSecondNumber(value) {
+//   if (value === '.' && this.#secondNumber.includes('.')) {
+//     return;
+//   }
+//   if (value === '.' && this.#secondNumber === '') {
+//     this.#secondNumber = '0.';
+//     return;
+//   }
+//   this.#secondNumber += value;
+// }
 
-  appendToSecondNumber(value) {
-    if (value === '.' && this.#secondNumber.includes('.')) {
-      return;
-    }
-    if (value === '.' && this.#secondNumber === '') {
-      this.#secondNumber = '0.';
-      return;
-    }
-    this.#secondNumber += value;
-  }
 
-  get operation() {
-    return this.#operation;
-  }
+// setOperation(value) {
+//   this.#operation = value;
+// }
 
-  setOperation(value) {
-    this.#operation = value;
-  }
+// calculate() {
 
-  get result() {
-    return this.#result;
-  }
+//   const firstNumber = Number(this.#firstNumber);
+//   const secondNumber = Number(this.#secondNumber);
 
-  calculate() {
+//   switch (this.#operation) {
+//   case "+":
+//     this.#result = firstNumber + secondNumber;
+//     break;
+//   case "-":
+//     this.#result = firstNumber - secondNumber;
+//     break;
+//   case 'x':
+//   case "*":
+//     this.#result = firstNumber * secondNumber;
+//     break;
+//   case "/":
+//     if (secondNumber === 0) {
+//       console.error("Cannot divide by zero");
+//     } else {
+//       this.#result = firstNumber / secondNumber;
+//     }
+//     break;
+//   case "%":
+//     if (secondNumber === 0) {
+//       console.error("Cannot find module of zero");
+//     } else {
+//       this.#result = firstNumber % secondNumber;
+//     }
+//     break;
+//   }
+// }
 
-    const firstNumber = Number(this.#firstNumber);
-    const secondNumber = Number(this.#secondNumber);
+// clear() {
+//   this.#firstNumber = '';
+//   this.#secondNumber = '';
+//   this.#operation = '';
+//   this.#result = '';
+// }
 
-    switch (this.#operation) {
-    case "+":
-      this.#result = firstNumber + secondNumber;
-      break;
-    case "-":
-      this.#result = firstNumber - secondNumber;
-      break;
-    case 'x':
-    case "*":
-      this.#result = firstNumber * secondNumber;
-      break;
-    case "/":
-      if (secondNumber === 0) {
-        console.error("Cannot divide by zero");
-      } else {
-        this.#result = firstNumber / secondNumber;
-      }
-      break;
-    case "%":
-      if (secondNumber === 0) {
-        console.error("Cannot find module of zero");
-      } else {
-        this.#result = firstNumber % secondNumber;
-      }
-      break;
-    }
-  }
-
-  clear() {
-    this.#firstNumber = '';
-    this.#secondNumber = '';
-    this.#operation = '';
-    this.#result = '';
-  }
-
-  delete() {
-    if (this.#secondNumber !== '') {
-      this.#secondNumber = this.#secondNumber.slice(0, -1);
-    } else if (this.#operation !== '') {
-      this.#operation = '';
-    } else if (this.#firstNumber !== '') {
-      this.#firstNumber = this.#firstNumber.slice(0, -1);
-    }
-  }
-}
+// delete() {
+//   if (this.#secondNumber !== '') {
+//     this.#secondNumber = this.#secondNumber.slice(0, -1);
+//   } else if (this.#operation !== '') {
+//     this.#operation = '';
+//   } else if (this.#firstNumber !== '') {
+//     this.#firstNumber = this.#firstNumber.slice(0, -1);
+//   }
+// }
