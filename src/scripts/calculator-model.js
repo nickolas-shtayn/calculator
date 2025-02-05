@@ -85,45 +85,19 @@ console.log("Testing calculate() with 10 and 5:");
   console.log(op + ":", getResult());
 });
 
-// calculate() {
+const clear = () => {
+  firstNumber = '';
+  secondNumber = '';
+  operation = '';
+  result = ''; 
+};
 
-//   const firstNumber = Number(this.#firstNumber);
-//   const secondNumber = Number(this.#secondNumber);
+//REMOVE
+console.log("before clearing:", firstNumber, secondNumber, operation, result);
+clear();
+console.log("after clearing:", firstNumber, secondNumber, operation, result);
 
-//   switch (this.#operation) {
-//   case "+":
-//     this.#result = firstNumber + secondNumber;
-//     break;
-//   case "-":
-//     this.#result = firstNumber - secondNumber;
-//     break;
-//   case 'x':
-//   case "*":
-//     this.#result = firstNumber * secondNumber;
-//     break;
-//   case "/":
-//     if (secondNumber === 0) {
-//       console.error("Cannot divide by zero");
-//     } else {
-//       this.#result = firstNumber / secondNumber;
-//     }
-//     break;
-//   case "%":
-//     if (secondNumber === 0) {
-//       console.error("Cannot find module of zero");
-//     } else {
-//       this.#result = firstNumber % secondNumber;
-//     }
-//     break;
-//   }
-// }
 
-// clear() {
-//   this.#firstNumber = '';
-//   this.#secondNumber = '';
-//   this.#operation = '';
-//   this.#result = '';
-// }
 
 // delete() {
 //   if (this.#secondNumber !== '') {
