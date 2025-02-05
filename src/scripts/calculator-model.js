@@ -1,4 +1,4 @@
-export class Calculator {
+export class CalculatorModel {
   #firstNumber = '';
   #secondNumber = '';
   #operation = '';
@@ -60,6 +60,7 @@ export class Calculator {
     case "-":
       this.#result = firstNumber - secondNumber;
       break;
+    case 'x':
     case "*":
       this.#result = firstNumber * secondNumber;
       break;
