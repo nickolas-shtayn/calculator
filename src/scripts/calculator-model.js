@@ -97,14 +97,29 @@ console.log("before clearing:", firstNumber, secondNumber, operation, result);
 clear();
 console.log("after clearing:", firstNumber, secondNumber, operation, result);
 
+const backspace = () => {
+  if (secondNumber !== '') {
+    secondNumber = secondNumber.slice(0, -1);
+  } else if (operation !== '') {
+    operation = '';
+  } else if (firstNumber !== '') {
+    firstNumber = firstNumber.slice(0, -1);
+  }
+};
 
+// REMOVE
+// Test backspace in different states
+firstNumber = '123';
+secondNumber = '456';
+operation = '+';
 
-// delete() {
-//   if (this.#secondNumber !== '') {
-//     this.#secondNumber = this.#secondNumber.slice(0, -1);
-//   } else if (this.#operation !== '') {
-//     this.#operation = '';
-//   } else if (this.#firstNumber !== '') {
-//     this.#firstNumber = this.#firstNumber.slice(0, -1);
-//   }
-// }
+console.log("Initial state:", firstNumber, operation, secondNumber);
+backspace(); 
+console.log("After first backspace:", firstNumber, operation, secondNumber);
+backspace();
+backspace(); 
+console.log("After clearing secondNumber:", firstNumber, operation, secondNumber);
+backspace();
+console.log("After clearing operation:", firstNumber, operation, secondNumber);
+backspace();
+console.log("After first number backspace:", firstNumber, operation, secondNumber);
