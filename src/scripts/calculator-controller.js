@@ -59,6 +59,17 @@ const handleSpecialKey = (value) => {
   }
 };
 
+const handleDecimalInput = () => {
+  if (getOperation() === '' && 
+      getFirstNumber() !== '' && 
+      !getFirstNumber().includes(".")) {
+    appendToFirstNumber('.');
+  } else if (getOperation() !== '' && 
+             getSecondNumber() !== '' && 
+             !getSecondNumber().includes(".")) {
+    appendToSecondNumber('.');
+  }
+};
 
 // export class CalculatorController {
 //   constructor (model, view, history) {
@@ -72,18 +83,6 @@ const handleSpecialKey = (value) => {
 //       this.model.appendToSecondNumber(calculation.secondNumber);
 //       this.updateView();
 //     };
-//   }
-
-//   handleClick(event) {
-//     const target = event.target.textContent.trim();
-//     this.view.animateButton(target);
-//     this.processInput(target);
-//   }
-
-//   handleKeyPress(event) {
-//     const target = event.key.toLowerCase();
-//     this.view.animateButton(target);
-//     this.processInput(target);
 //   }
 
 //   processInput(value) {
