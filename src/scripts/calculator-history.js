@@ -38,6 +38,13 @@ const loadSavedHistory = () => {
   }
 };
 
+const toggleHistoryPanel = () => {
+  toggleBtn.classList.toggle("open");
+  toggleBtn.classList.toggle("collapsed");
+  historyDiv.classList.toggle("open");
+  historyDiv.classList.toggle("collapsed");
+};
+
 // export class CalculatorHistory {
 //     constructor () {
 //         this.historyList = [];
