@@ -1,3 +1,5 @@
+import { getFirstNumber } from "./calculator-model";
+
 const historyList = [];
 const historyDiv = document.querySelector("#history-div");
 const toggleBtn = document.querySelector("#toggle");
@@ -66,6 +68,10 @@ const clearHistory = () => {
 const handleHistoryClick = (event, onHistorySelect) => {
   const targetEntry = event.target.closest(".calculations-result");
   if (targetEntry) {
+    if (getFirstNumber() !== '') {
+        return;
+    }
+
     const calculation = targetEntry.querySelector(".calculation").textContent;
     const parts = calculation.split(" ");
     const selectedCalculation = {
