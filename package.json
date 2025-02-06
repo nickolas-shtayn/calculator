@@ -4,19 +4,28 @@
   "description": "![The Odin Project](https://www.skillfinder.com.au/media/wysiwyg/the-odin-project-logo-skill-finder-partners-page.png) This repository contains a [calculator project](https://www.theodinproject.com/lessons/foundations-calculator) created as part of the Odin Project’s [Foundations course](https://www.theodinproject.com/paths/foundations/courses/foundations). The goal of this project is to demonstrate core frontend development skills, including HTML, CSS, and JavaScript.The calculator is functional but currently lacks some features and design improvements that are planned for future updates.",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "eslint src/scripts/*.js",
     "build": "npx webpack",
     "dev": "npx webpack serve"
   },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.26.7",
+    "@babel/preset-env": "^7.26.7",
     "@eslint/js": "^9.16.0",
+    "babel-jest": "^29.7.0",
     "css-loader": "^7.1.2",
     "eslint": "^9.16.0",
     "globals": "^15.13.0",
     "html-webpack-plugin": "^5.6.3",
+    "jest": "^29.7.0",
     "style-loader": "^4.0.0",
     "webpack": "^5.97.1",
     "webpack-cli": "^6.0.1",
