@@ -3,7 +3,7 @@ const historyDiv = document.querySelector("#history-div");
 const toggleBtn = document.querySelector("#toggle");
 const clearBtn = document.querySelector("#history-top button");
 
-const setupHistory = (onHistorySelect) => {
+export const setupHistory = (onHistorySelect) => {
   historyDiv.classList.add('collapsed');
   toggleBtn.classList.add('open');
   
