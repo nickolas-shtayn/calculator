@@ -4,11 +4,17 @@ import { getFirstNumber, getSecondNumber, setOperation, getResult,
 
 import { addToHistory } from "./calculator-history";
 
-const OPERATIONS = ['+', '-', 'x', '*', '/', '%'];
+const OPERATIONS = ['+', '-', 'x', '/', '%'];
 const SPECIAL_KEYS = ['C', "backspace", '=', "enter", '.'];
 
+const normalizeOperation = (operation) => {
+  return operation === '*' ? 'x' : operation;
+};
 
 export const handlePostCalculation = (value) => {
+
+  const normalizedValue = normalizeOperation(value);
+
   if (value === "shift" || value === "meta") {
     return;
   }
@@ -33,10 +39,10 @@ export const handlePostCalculation = (value) => {
   clear();
   appendToFirstNumber(resultValue);
 
-  if (OPERATIONS.includes(value)) {
-    setOperation(value);
-  } else if (SPECIAL_KEYS.includes(value)) {
-    handleSpecialKey(value);
+  if (OPERATIONS.includes(normalizedValue)) {
+    setOperation(normalizedValue);
+  } else if (SPECIAL_KEYS.includes(normalizedValue)) {
+    handleSpecialKey(normalizedValue);
   }
 };
 
@@ -47,15 +53,18 @@ export const handleNormalInput = (value) => {
     } else {
       appendToSecondNumber(value);
     }
-  } else if (OPERATIONS.includes(value)) {
-    if (getFirstNumber() !== '') {
-      setOperation(value);
-    }
-  } else if (SPECIAL_KEYS.includes(value)) {
-    handleSpecialKey(value);
   } else {
-    if (value === "shift" || value === "meta") return;
-    alert(`Invalid input: ${value}`);
+    const normalizedValue = normalizeOperation(value);
+    if (OPERATIONS.includes(normalizedValue)) {
+      if (getFirstNumber() !== '') {
+        setOperation(normalizedValue);
+      }
+    } else if (SPECIAL_KEYS.includes(normalizedValue)) {
+      handleSpecialKey(normalizedValue);
+    } else {
+      if (value === "shift" || value === "meta") return;
+      alert(`Invalid input: ${value}`);
+    }
   }
 };
 
