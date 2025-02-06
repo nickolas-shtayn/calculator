@@ -1,5 +1,3 @@
-import { backspace } from "./calculator-model";
-
 const OPERATIONS = ['+', '-', 'x', '*', '/', '%'];
 const SPECIAL_KEYS = ['C', "backspace", '=', "enter", '.'];
 
