@@ -1,51 +1,49 @@
-const display = document.querySelector("#display-text");
-const prevCalc = document.querySelector("#previous-calculation");
+// const display = document.querySelector("#display-text");
+// const prevCalc = document.querySelector("#previous-calculation");
 
-const keyToButtonId = {
-  '0': '#zero',
-  '1': '#one',
-  '2': '#two',
-  '3': '#three',
-  '4': '#four',
-  '5': '#five',
-  '6': '#six',
-  '7': '#seven',
-  '8': '#eight',
-  '9': '#nine',
-  '+': '#addition',
-  '-': '#subtraction',
-  'x': '#multiplication',
-  '/': '#division',
-  '%': '#percentage',
-  '.': '#decimal',
-  '=': '#equals',
-  'enter': '#equals',
-  'backspace': '#backspace',
-  'C': '#clear',
-};
+// const keyToButtonId = {
+//   '0': '#zero',
+//   '1': '#one',
+//   '2': '#two',
+//   '3': '#three',
+//   '4': '#four',
+//   '5': '#five',
+//   '6': '#six',
+//   '7': '#seven',
+//   '8': '#eight',
+//   '9': '#nine',
+//   '+': '#addition',
+//   '-': '#subtraction',
+//   'x': '#multiplication',
+//   '/': '#division',
+//   '%': '#percentage',
+//   '.': '#decimal',
+//   '=': '#equals',
+//   'enter': '#equals',
+//   'backspace': '#backspace',
+//   'C': '#clear',
+// };
 
 let mockDisplay = { value: '' };
 let mockPrevCalc = { textContent: '' };
 
-// export class CalculatorView {
-//   constructor () {
-//     this.display = document.querySelector("#display-text");
-//     this.prevCalc = document.querySelector("#previous-calculation");
-//     this.keyToButtonId = {
-      
-//     };
+const updateDisplay = (firstNumber, secondNumber, operation, result) => {
+  if (result) {
+    mockDisplay.value = result;
+    mockPrevCalc.textContent = `${firstNumber} ${operation} ${secondNumber} =`;
+  } else {
+    mockDisplay.textContent = `${firstNumber} ${operation} ${secondNumber} =`;
+    mockPrevCalc.textContent = '';
+  }
+};
 
-//   }
+// REMOVE
+console.log("Display value before:", mockDisplay.value);
+console.log("Previous calculation before:", mockPrevCalc.textContent);
+updateDisplay('1', '2', '+', '3');
+console.log("Display value after:", mockDisplay.value);
+console.log("Previous calculation after:", mockPrevCalc.textContent);
 
-//   updateDisplay(state) {
-//     if (state.result) {
-//       this.display.value = state.result;
-//       this.prevCalc.textContent = `${state.firstNumber} ${state.operation} ${state.secondNumber} =`;
-//     } else {
-//       this.display.value = `${state.firstNumber} ${state.operation} ${state.secondNumber}`;
-//       this.prevCalc.textContent = '';
-//       }
-//     }
 
 //   animateButton(key) {
 //     const buttonSelector = this.keyToButtonId[key];
