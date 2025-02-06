@@ -3,6 +3,30 @@ const historyDiv = document.querySelector("#history-div");
 const toggleBtn = document.querySelector("#toggle");
 const clearBtn = document.querySelector("#history-top button");
 
+const addToHistory = (calculation) => {
+  const historyEntry = document.createElement("div");
+  historyEntry.className = "calculations-result";
+
+  const historyCalculation = document.createElement("div");
+  const historyResult = document.createElement("div");
+
+  historyCalculation.className = "calculation";
+  historyCalculation.textContent = `${calculation.firstNumber} ${calculation.operation} ${calculation.secondNumber} =`;
+
+  historyEntry.appendChild(historyCalculation);
+  historyEntry.appendChild(historyResult);
+
+  historyResult.className = "result";
+  historyResult.textContent = calculation.result;
+
+  historyDiv.appendChild(historyEntry);
+
+  if (!historyList.includes(calculation)) {
+    historyList.push({...calculation});
+    localStorage.setItem("historyStorage", JSON.stringify(historyList));
+  }
+};
+
 
 // export class CalculatorHistory {
 //     constructor () {
