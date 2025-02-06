@@ -24,28 +24,17 @@ const keyToButtonId = {
   'C': '#clear',
 };
 
-let mockDisplay = { value: '' };
-let mockPrevCalc = { textContent: '' };
-
-const updateDisplay = (firstNumber, secondNumber, operation, result) => {
+export const updateDisplay = (firstNumber, secondNumber, operation, result) => {
   if (result) {
-    mockDisplay.value = result;
-    mockPrevCalc.textContent = `${firstNumber} ${operation} ${secondNumber} =`;
+    display.value = result;
+    prevCalc.textContent = `${firstNumber} ${operation} ${secondNumber} =`;
   } else {
-    mockDisplay.textContent = `${firstNumber} ${operation} ${secondNumber} =`;
-    mockPrevCalc.textContent = '';
+    display.textContent = `${firstNumber} ${operation} ${secondNumber} =`;
+    prevCalc.textContent = '';
   }
 };
 
-// REMOVE
-console.log("Display value before:", mockDisplay.value);
-console.log("Previous calculation before:", mockPrevCalc.textContent);
-updateDisplay('1', '2', '+', '3');
-console.log("Display value after:", mockDisplay.value);
-console.log("Previous calculation after:", mockPrevCalc.textContent);
-
-
-const animateButton = (key) => {
+export const animateButton = (key) => {
   const buttonSelector = keyToButtonId[key];
   if (buttonSelector) {
     const buttonElem = document.querySelector(buttonSelector);
