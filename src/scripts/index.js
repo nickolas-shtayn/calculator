@@ -34,3 +34,5 @@ function initializeCalculator() {
       handleCalculatorInput(target);
     });
 };
+
+initializeCalculator();
