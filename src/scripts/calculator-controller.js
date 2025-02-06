@@ -14,6 +14,24 @@ const handlePostCalculation = (value) => {
   }
 };
 
+const handleNormalInput = (value) => {
+  if (!isNaN(value)) {
+    if (getOperation() === '') {
+      appendToFirstNumber(value);
+    } else {
+      appendToSecondNumber(value);
+    }
+  } else if (OPERATIONS.includes(value)) {
+    if (getFirstNumber() !== '') {
+      setOperation(value);
+    }
+  } else if (SPECIAL_KEYS.includes(value)) {
+    handleSpecialKey(value);
+  } else {
+    if (value === "shift" || value === "meta") return;
+    alert(`Invalid input: ${value}`);
+  }
+};
 
 // export class CalculatorController {
 //   constructor (model, view, history) {
@@ -50,15 +68,6 @@ const handlePostCalculation = (value) => {
 //     this.updateView();
 //   }
 
-//   handleNormalInput(value) {
-//       // numbers
-//   if (!isNaN(value)) {
-//     if (this.model.operation === '') {
-//       this.model.appendToFirstNumber(value);
-//     } else {
-//       this.model.appendToSecondNumber(value);
-//       }
-//   }
 //   // operation
 //   else if (this.#OPERATIONS.includes(value)) {
 //     if (this.model.firstNumber !== '') {
