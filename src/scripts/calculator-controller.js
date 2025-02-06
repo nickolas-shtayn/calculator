@@ -1,6 +1,20 @@
 const OPERATIONS = ['+', '-', 'x', '*', '/', '%'];
 const SPECIAL_KEYS = ['C', "backspace", '=', "enter", '.'];
 
+
+const handlePostCalculation = (value) => {
+  const previousResult = getResult();
+  clearCalculator();
+
+  if (!isNaN(value)) {
+    appendToFirstNumber(value);
+  } else if (OPERATIONS.includes(value)) {
+    appendToFirstNumber(previousResult);
+    setOperation(value);
+  }
+};
+
+
 // export class CalculatorController {
 //   constructor (model, view, history) {
 //     this.model = model;
@@ -14,9 +28,6 @@ const SPECIAL_KEYS = ['C', "backspace", '=', "enter", '.'];
 //       this.updateView();
 //     };
 //   }
-
-//   #OPERATIONS = ['+', '-', 'x', '*', '/', '%'];
-//   #SPECIAL_KEYS = ['C', "backspace", '=', "enter", '.'];
 
 //   handleClick(event) {
 //     const target = event.target.textContent.trim();
