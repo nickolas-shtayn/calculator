@@ -1,3 +1,5 @@
+import { backspace } from "./calculator-model";
+
 const OPERATIONS = ['+', '-', 'x', '*', '/', '%'];
 const SPECIAL_KEYS = ['C', "backspace", '=', "enter", '.'];
 
@@ -39,7 +41,7 @@ const handleSpecialKey = (value) => {
     clearCalculator();
     break;
   case "backspace":
-    deleteLastEntry();
+    backspace();
     break;
   case "enter":
   case '=':
@@ -70,83 +72,3 @@ const handleDecimalInput = () => {
     appendToSecondNumber('.');
   }
 };
-
-// export class CalculatorController {
-//   constructor (model, view, history) {
-//     this.model = model;
-//     this.view = view;
-//     this.history = history
-
-//     this.history.onHistorySelect = (calculation) => {
-//       this.model.appendToFirstNumber(calculation.firstNumber);
-//       this.model.setOperation(calculation.operation);
-//       this.model.appendToSecondNumber(calculation.secondNumber);
-//       this.updateView();
-//     };
-//   }
-
-//   processInput(value) {
-//     if (this.model.result) {
-//       this.handlePostCalculation(value) 
-//     } else {
-//       this.handleNormalInput(value)
-//     }
-//     this.updateView();
-//   }
-
-//   // operation
-//   else if (this.#OPERATIONS.includes(value)) {
-//     if (this.model.firstNumber !== '') {
-//       this.model.setOperation(value);
-//     }
-//   }
-//   // special
-//   else if (this.#SPECIAL_KEYS.includes(value)) {
-//     switch(value) {
-//       case 'C':
-//           this.model.clear();
-//           break;
-//       case "backspace":
-//           this.model.delete();
-//           break;
-//       case "enter":
-//       case '=':
-//         if (this.model.firstNumber !== '' && this.model.operation !== '' && this.model.secondNumber !== '') {
-//           this.model.calculate();
-//           this.history.addToHistory({
-//             firstNumber: this.model.firstNumber,
-//             operation: this.model.operation,
-//             secondNumber: this.model.secondNumber,
-//             result: this.model.result
-//           });
-//         }
-//           break;
-//       case '.':
-//           if (this.model.operation === '' && this.model.firstNumber !== '' && !this.model.firstNumber.includes(".")) {
-//             this.model.appendToFirstNumber('.');
-//           } else if (this.model.operation !== '' && this.model.secondNumber !== '' && !this.model.secondNumber.includes(".")) {
-//             this.model.appendToSecondNumber('.');
-//           }
-//           break;
-//     }
-//   }
-//   else {
-//     if (value === "shift" || value === "meta") {
-//       return;
-//     }
-//     alert(`Invalid input: ${value}`);
-//     return;
-//     }
-//   }
-
-//   updateView() {
-//     const currentState = {
-//       firstNumber: this.model.firstNumber,
-//       secondNumber: this.model.secondNumber,
-//       operation: this.model.operation,
-//       result: this.model.result
-//     };
-//     this.view.updateDisplay(currentState);
-//   }
-  
-// };
