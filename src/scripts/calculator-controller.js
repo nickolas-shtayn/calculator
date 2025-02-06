@@ -4,7 +4,7 @@ const OPERATIONS = ['+', '-', 'x', '*', '/', '%'];
 const SPECIAL_KEYS = ['C', "backspace", '=', "enter", '.'];
 
 
-const handlePostCalculation = (value) => {
+export const handlePostCalculation = (value) => {
   const previousResult = getResult();
   clear();
 
