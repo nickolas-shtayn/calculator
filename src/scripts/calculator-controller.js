@@ -1,3 +1,9 @@
+import { getFirstNumber, getSecondNumber, setOperation, getResult, 
+  appendToFirstNumber, appendToSecondNumber,
+  getOperation, clear, backspace, calculate} from "./calculator-model";
+
+import { addToHistory } from "./calculator-history";
+
 const OPERATIONS = ['+', '-', 'x', '*', '/', '%'];
 const SPECIAL_KEYS = ['C', "backspace", '=', "enter", '.'];
 
@@ -14,7 +20,7 @@ export const handlePostCalculation = (value) => {
   }
 };
 
-const handleNormalInput = (value) => {
+export const handleNormalInput = (value) => {
   if (!isNaN(value)) {
     if (getOperation() === '') {
       appendToFirstNumber(value);
@@ -36,7 +42,7 @@ const handleNormalInput = (value) => {
 const handleSpecialKey = (value) => {
   switch(value) {
   case 'C':
-    clearCalculator();
+    clear();
     break;
   case "backspace":
     backspace();

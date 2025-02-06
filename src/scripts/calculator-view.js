@@ -29,7 +29,7 @@ export const updateDisplay = (firstNumber, secondNumber, operation, result) => {
     display.value = result;
     prevCalc.textContent = `${firstNumber} ${operation} ${secondNumber} =`;
   } else {
-    display.textContent = `${firstNumber} ${operation} ${secondNumber} =`;
+    display.value = `${firstNumber} ${operation} ${secondNumber}`;
     prevCalc.textContent = '';
   }
 };

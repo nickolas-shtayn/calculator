@@ -14,7 +14,7 @@ export const setupHistory = (onHistorySelect) => {
   loadSavedHistory(onHistorySelect);
 };
 
-const addToHistory = (calculation) => {
+export const addToHistory = (calculation) => {
   const historyEntry = document.createElement("div");
   historyEntry.className = "calculations-result";
 
