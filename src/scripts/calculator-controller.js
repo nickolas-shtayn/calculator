@@ -4,7 +4,7 @@ const SPECIAL_KEYS = ['C', "backspace", '=', "enter", '.'];
 
 const handlePostCalculation = (value) => {
   const previousResult = getResult();
-  clearCalculator();
+  clear();
 
   if (!isNaN(value)) {
     appendToFirstNumber(value);
@@ -48,18 +48,6 @@ const handlePostCalculation = (value) => {
 //       this.handleNormalInput(value)
 //     }
 //     this.updateView();
-//   }
-
-//   handlePostCalculation(value) {
-//     const previousResult = this.model.result;
-//     this.model.clear()
-
-//     if (!isNaN(value)) {
-//       this.model.appendToFirstNumber(value);
-//     } else if (this.#OPERATIONS.includes(value)) {
-//       this.model.appendToFirstNumber(previousResult);
-//       this.model.setOperation(value);
-//     }
 //   }
 
 //   handleNormalInput(value) {
