@@ -45,6 +45,14 @@ const toggleHistoryPanel = () => {
   historyDiv.classList.toggle("collapsed");
 };
 
+const clearHistory = () => {
+  localStorage.clear();
+  historyList.length = 0;
+  const historyEntries = document.querySelectorAll(".calculations-result");
+  historyEntries.forEach(entry => entry.remove());
+};
+
+
 // export class CalculatorHistory {
 //     constructor () {
 //         this.historyList = [];
@@ -59,55 +67,6 @@ const toggleHistoryPanel = () => {
 //         this.historyDiv.addEventListener("click", (event) => this.handleHistoryClick(event));
 
 //         this.loadSavedHistory();
-//     }
-
-//     loadSavedHistory() {
-//         const savedHistory = localStorage.getItem("historyStorage");
-//         if (savedHistory) {
-//             const historyData = JSON.parse(savedHistory);
-//             historyData.forEach(calculation => {
-//                 this.historyList.push(calculation);
-//                 this.addToHistory(calculation); 
-//             });
-//         }
-//     }
-
-//     addToHistory(calculation) {
-//         const historyEntry = document.createElement("div");
-//         historyEntry.className = "calculations-result";
-
-//         const historyCalculation = document.createElement("div");
-//         const historyResult = document.createElement("div");
-
-//         historyCalculation.className = "calculation";
-//         historyCalculation.textContent = `${calculation.firstNumber} ${calculation.operation} ${calculation.secondNumber} =`;
-
-//         historyEntry.appendChild(historyCalculation);
-//         historyEntry.appendChild(historyResult);
-
-//         historyResult.className = "result";
-//         historyResult.textContent = calculation.result;
-
-//         this.historyDiv.appendChild(historyEntry);
-        
-//         if (!this.historyList.includes(calculation)) {
-//             this.historyList.push({...calculation});
-//             localStorage.setItem("historyStorage", JSON.stringify(this.historyList));
-//         }
-//     }
-
-//     togglePanel() {
-//         this.toggleBtn.classList.toggle("open");
-//         this.toggleBtn.classList.toggle("collapsed");
-//         this.historyDiv.classList.toggle("open");
-//         this.historyDiv.classList.toggle("collapsed");
-//     }
-
-//     clearHistory() {
-//         localStorage.clear();
-//         this.historyList = [];
-//         const historyEntries = document.querySelectorAll(".calculations-result");
-//         historyEntries.forEach(entry => entry.remove());
 //     }
 
 //     handleHistoryClick(event) {
