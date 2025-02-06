@@ -24,7 +24,8 @@ const keyToButtonId = {
   'C': '#clear',
 };
 
-
+let mockDisplay = { value: '' };
+let mockPrevCalc = { textContent: '' };
 
 // export class CalculatorView {
 //   constructor () {
