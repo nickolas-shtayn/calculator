@@ -9,6 +9,11 @@ const SPECIAL_KEYS = ['C', "backspace", '=', "enter", '.'];
 
 
 export const handlePostCalculation = (value) => {
+
+  if (isNaN(value) && !OPERATIONS.includes(value)) {
+    return;
+  }
+
   const previousResult = getResult();
   clear();
 
