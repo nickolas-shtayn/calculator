@@ -33,6 +33,33 @@ const handleNormalInput = (value) => {
   }
 };
 
+const handleSpecialKey = (value) => {
+  switch(value) {
+  case 'C':
+    clearCalculator();
+    break;
+  case "backspace":
+    deleteLastEntry();
+    break;
+  case "enter":
+  case '=':
+    if (getFirstNumber() !== '' && getOperation() !== '' && getSecondNumber() !== '') {
+      calculate();
+      addToHistory({
+        firstNumber: getFirstNumber(),
+        operation: getOperation(),
+        secondNumber: getSecondNumber(),
+        result: getResult()
+      });
+    }
+    break;
+  case '.':
+    handleDecimalInput();
+    break;
+  }
+};
+
+
 // export class CalculatorController {
 //   constructor (model, view, history) {
 //     this.model = model;
