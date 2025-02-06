@@ -6,23 +6,31 @@ import { setupHistory } from "./calculator-history";
 import { handleCalculatorInput } from "./calculator-controller";
 import "../styles/style.css"
 
-const initializeCalculator = () => {
+function initializeCalculator() {
     setupHistory((calculation) => {
-        appendToFirstNumber(calculation.firstNumber);
-        setOperation(calculation.operation);
-        appendToSecondNumber(calculation.secondNumber);
-        updateDisplay(getFirstNumber(), getSecondNumber(), getOperation(), getResult());
+      appendToFirstNumber(calculation.firstNumber);
+      setOperation(calculation.operation);
+      appendToSecondNumber(calculation.secondNumber);
+      updateDisplay(
+        getFirstNumber(),
+        getSecondNumber(),
+        getOperation(),
+        getResult()
+      );
+    });
+  
+    const mouse = document.querySelector(".buttons");
+    const keyboard = document.querySelector("#calculator");
+  
+    mouse.addEventListener("click", (event) => {
+      const target = event.target.textContent.trim();
+      animateButton(target);
+      handleCalculatorInput(target);
+    });
+  
+    keyboard.addEventListener("keydown", (event) => {
+      const target = event.key.toLowerCase();
+      animateButton(target);
+      handleCalculatorInput(target);
     });
 };
-
-// const model = new CalculatorModel;
-// const view = new CalculatorView;
-// const history = new CalculatorHistory;
-// const controller = new CalculatorController(model, view, history);
-
-// const mouse = document.querySelector(".buttons");
-// const keyboard = document.querySelector("#calculator");
-
-// mouse.addEventListener("click", (event) => controller.handleClick(event));
-
-// keyboard.addEventListener("keydown", (event) => controller.handleKeyPress(event));
