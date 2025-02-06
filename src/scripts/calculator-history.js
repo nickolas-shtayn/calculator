@@ -3,6 +3,17 @@ const historyDiv = document.querySelector("#history-div");
 const toggleBtn = document.querySelector("#toggle");
 const clearBtn = document.querySelector("#history-top button");
 
+const setupHistory = (onHistorySelect) => {
+  historyDiv.classList.add('collapsed');
+  toggleBtn.classList.add('open');
+  
+  toggleBtn.addEventListener("click", toggleHistoryPanel);
+  clearBtn.addEventListener("click", clearHistory);
+  historyDiv.addEventListener("click", (event) => handleHistoryClick(event, onHistorySelect));
+  
+  loadSavedHistory(onHistorySelect);
+};
+
 const addToHistory = (calculation) => {
   const historyEntry = document.createElement("div");
   historyEntry.className = "calculations-result";
@@ -52,34 +63,16 @@ const clearHistory = () => {
   historyEntries.forEach(entry => entry.remove());
 };
 
-
-// export class CalculatorHistory {
-//     constructor () {
-//         this.historyList = [];
-//         this.historyDiv = document.querySelector("#history-div");
-//         this.toggleBtn = document.querySelector("#toggle");
-//         this.clearBtn = document.querySelector("#history-top button");
-//         this.historyDiv.classList.add('collapsed');
-//         this.toggleBtn.classList.add('open');
-    
-//         this.toggleBtn.addEventListener("click", () => this.togglePanel());
-//         this.clearBtn.addEventListener("click", () => this.clearHistory());
-//         this.historyDiv.addEventListener("click", (event) => this.handleHistoryClick(event));
-
-//         this.loadSavedHistory();
-//     }
-
-//     handleHistoryClick(event) {
-//         const targetEntry = event.target.closest(".calculations-result");
-//         if (targetEntry) {
-//             const calculation = targetEntry.querySelector(".calculation").textContent;
-//             const parts = calculation.split(" ");
-//             const selectedCalculation = {
-//                 firstNumber: parts[0],
-//                 operation: parts[1],
-//                 secondNumber: parts[2].replace('=', '')
-//             };
-//             this.onHistorySelect(selectedCalculation);
-//         }
-//     }
-// }
+const handleHistoryClick = (event, onHistorySelect) => {
+  const targetEntry = event.target.closest(".calculations-result");
+  if (targetEntry) {
+    const calculation = targetEntry.querySelector(".calculation").textContent;
+    const parts = calculation.split(" ");
+    const selectedCalculation = {
+      firstNumber: parts[0],
+      operation: parts[1],
+      secondNumber: parts[2].replace('=', '')
+    };
+    onHistorySelect(selectedCalculation);
+  }
+};
