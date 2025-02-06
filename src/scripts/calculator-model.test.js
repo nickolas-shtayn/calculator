@@ -1,75 +1,91 @@
-import { calculate } from "./calculator-model";
+import { calculate, appendToFirstNumber, getResult,
+         appendToSecondNumber, setOperation, clear } from "./calculator-model";
 
 describe("Calculate", () => {
     test("addition", () => {
-        firstNumber = '10';
-        secondNumber = '5';
-        operation = '+'
+        appendToFirstNumber('10');
+        appendToSecondNumber('5');
+        setOperation('+');
 
-        const result = calculate();
+        calculate();
 
-        expect(result).toBe(15);
+        expect(getResult()).toBe(15);
+        clear()
     });
 
     test("subtraction", () => {
-        firstNumber = '10';
-        secondNumber = '5';
-        operation = '-';
+        appendToFirstNumber('10');
+        appendToSecondNumber('5');
+        setOperation('-');
 
-        const result = calculate();
+        calculate();
 
-        expect(result).toBe(5);
+        expect(getResult()).toBe(5);
+        clear()
     });
 
     test("multiplication", () => {
-        firstNumber = '10';
-        secondNumber = '5';
-        operation = '*';
+        appendToFirstNumber('10');
+        appendToSecondNumber('5');
+        setOperation('*')
 
-        const result = calculate();
+        calculate();
 
-        expect(result).toBe(50);
+        expect(getResult()).toBe(50);
+        clear()
     });
 
     test("division", () => {
-        firstNumber = '10';
-        secondNumber = '5';
-        operation = '/';
+        appendToFirstNumber('10');
+        appendToSecondNumber('5');
+        setOperation('/');
 
-        const result = calculate();
+        calculate();
 
-        expect(result).toBe(2);        
+        expect(getResult()).toBe(2);  
+        clear()      
     });
 
     test("division by 0", () => {
-        firstNumber = '10';
-        secondNumber = '0';
-        operation = '/';
+        jest.spyOn(console, 'error');
 
-        const result = calculate();
+        appendToFirstNumber('10');
+        appendToSecondNumber('0');
+        setOperation('/');
 
-        expect(result).toBeUndefined()        
+        calculate();
+
+        expect(getResult()).toBe('');        
         expect(console.error).toHaveBeenCalledWith("Cannot divide by zero");
+        
+        jest.clearAllMocks();
+        clear()
     });
 
     test("modulo", () => {
-        firstNumber = '10';
-        secondNumber = '5';
-        operation = '%';
+        appendToFirstNumber('10');
+        appendToSecondNumber('5');
+        setOperation('%');
 
-        const result = calculate();
+        calculate();
 
-        expect(result).toBe(0);        
+        expect(getResult()).toBe(0); 
+        clear()       
     });
 
     test("modulo of 0", () => {
-        firstNumber = '10';
-        secondNumber = '0';
-        operation = '%';
+        jest.spyOn(console, 'error');
 
-        const result = calculate();
+        appendToFirstNumber('10');
+        appendToSecondNumber('0');
+        setOperation('%');
 
-        expect(result).toBeNaN();
-        expect(console.error).toHaveBeenCalledWith("Cannot find modulo of zero")
+        calculate();
+
+        expect(getResult()).toBe('');
+        expect(console.error).toHaveBeenCalledWith("Cannot find modulo of zero");
+        
+        jest.clearAllMocks();
+        clear()
     });
 });
