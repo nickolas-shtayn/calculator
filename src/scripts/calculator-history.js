@@ -27,6 +27,16 @@ const addToHistory = (calculation) => {
   }
 };
 
+const loadSavedHistory = () => {
+  const savedHistory = localStorage.getItem("historyStorage");
+  if (savedHistory) {
+    const historyData = JSON.parse(savedHistory);
+    historyData.forEach(calculation => {
+      historyList.push(calculation);
+      addToHistory(calculation);
+    });
+  }
+};
 
 // export class CalculatorHistory {
 //     constructor () {
