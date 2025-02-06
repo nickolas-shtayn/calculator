@@ -9,19 +9,34 @@ const SPECIAL_KEYS = ['C', "backspace", '=', "enter", '.'];
 
 
 export const handlePostCalculation = (value) => {
-
-  if (isNaN(value) && !OPERATIONS.includes(value)) {
+  if (value === "shift" || value === "meta") {
     return;
   }
 
-  const previousResult = getResult();
-  clear();
+  if (value === '.') {
+    if (!String(getResult()).includes('.')) {
+      const resultValue = getResult();
+      clear();
+      appendToFirstNumber(resultValue);
+      appendToFirstNumber('.');
+    }
+    return;
+  }
 
   if (!isNaN(value)) {
+    clear();
     appendToFirstNumber(value);
-  } else if (OPERATIONS.includes(value)) {
-    appendToFirstNumber(previousResult);
+    return;
+  }
+
+  const resultValue = getResult();
+  clear();
+  appendToFirstNumber(resultValue);
+
+  if (OPERATIONS.includes(value)) {
     setOperation(value);
+  } else if (SPECIAL_KEYS.includes(value)) {
+    handleSpecialKey(value);
   }
 };
 
