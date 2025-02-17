@@ -1,100 +1,74 @@
-export class CalculatorModel {
-  #firstNumber = '';
-  #secondNumber = '';
-  #operation = '';
-  #result = '';
+let firstNumber = '';
+let secondNumber = '';
+let operation = '';
+let result = '';
 
 
-  get firstNumber() {
-    return this.#firstNumber;
+export const getFirstNumber = () => firstNumber;
+export const getSecondNumber = () => secondNumber;
+export const getOperation = () => operation;
+export const getResult = () => result;
+
+export const appendToFirstNumber = (value) => {
+  if (value === '.' && firstNumber.includes('.')) return;
+  if (value === '.' && firstNumber === '') {
+    firstNumber = '0.';
+    return;
   }
+  firstNumber += value;
+};
 
-  appendToFirstNumber(value) {
-    if (value === '.' && this.#firstNumber.includes('.')) {
+export const appendToSecondNumber = (value) => {
+  if (value === '.' && secondNumber.includes('.')) return;
+  if (value === '.' && secondNumber === '') {
+    secondNumber = '0.';
+    return;
+  }
+  secondNumber += value;
+};
+
+export const setOperation = (value) => {
+  operation = value;
+};
+
+export const calculate = () => {
+  const num1 = Number(firstNumber);
+  const num2 = Number(secondNumber);
+
+  switch (operation) {
+  case "+": result = num1 + num2; break;
+  case "-": result = num1 - num2; break;
+  case "x": result = num1 * num2; break;
+  case "/":
+    if (num2 === 0) {
+      console.error("Cannot divide by zero");
       return;
     }
-    if (value === '.' && this.#firstNumber === '') {
-      this.#firstNumber = '0.';
+    result = num1 / num2;
+    break;
+  case "%":
+    if (num2 === 0) {
+      console.error("Cannot find module of zero");
       return;
     }
-    this.#firstNumber += value;
+    result = num1 % num2;
+    break;
   }
+};
 
+export const clear = () => {
+  firstNumber = '';
+  secondNumber = '';
+  operation = '';
+  result = ''; 
+};
 
-  get secondNumber() {
-    return this.#secondNumber;
+export const backspace = () => {
+  if (secondNumber !== '') {
+    secondNumber = secondNumber.slice(0, -1);
+  } else if (operation !== '') {
+    operation = '';
+  } else if (firstNumber !== '') {
+    firstNumber = firstNumber.slice(0, -1);
   }
-
-  appendToSecondNumber(value) {
-    if (value === '.' && this.#secondNumber.includes('.')) {
-      return;
-    }
-    if (value === '.' && this.#secondNumber === '') {
-      this.#secondNumber = '0.';
-      return;
-    }
-    this.#secondNumber += value;
-  }
-
-  get operation() {
-    return this.#operation;
-  }
-
-  setOperation(value) {
-    this.#operation = value;
-  }
-
-  get result() {
-    return this.#result;
-  }
-
-  calculate() {
-
-    const firstNumber = Number(this.#firstNumber);
-    const secondNumber = Number(this.#secondNumber);
-
-    switch (this.#operation) {
-    case "+":
-      this.#result = firstNumber + secondNumber;
-      break;
-    case "-":
-      this.#result = firstNumber - secondNumber;
-      break;
-    case 'x':
-    case "*":
-      this.#result = firstNumber * secondNumber;
-      break;
-    case "/":
-      if (secondNumber === 0) {
-        console.error("Cannot divide by zero");
-      } else {
-        this.#result = firstNumber / secondNumber;
-      }
-      break;
-    case "%":
-      if (secondNumber === 0) {
-        console.error("Cannot find module of zero");
-      } else {
-        this.#result = firstNumber % secondNumber;
-      }
-      break;
-    }
-  }
-
-  clear() {
-    this.#firstNumber = '';
-    this.#secondNumber = '';
-    this.#operation = '';
-    this.#result = '';
-  }
-
-  delete() {
-    if (this.#secondNumber !== '') {
-      this.#secondNumber = this.#secondNumber.slice(0, -1);
-    } else if (this.#operation !== '') {
-      this.#operation = '';
-    } else if (this.#firstNumber !== '') {
-      this.#firstNumber = this.#firstNumber.slice(0, -1);
-    }
-  }
-}
+};

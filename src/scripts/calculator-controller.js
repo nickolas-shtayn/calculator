@@ -1,115 +1,107 @@
-export class CalculatorController {
-  constructor (model, view, history) {
-    this.model = model;
-    this.view = view;
-    this.history = history
+import { getFirstNumber, getSecondNumber, setOperation, getResult, 
+  appendToFirstNumber, appendToSecondNumber,
+  getOperation, clear, backspace, calculate} from "./calculator-model";
 
-    this.history.onHistorySelect = (calculation) => {
-      this.model.appendToFirstNumber(calculation.firstNumber);
-      this.model.setOperation(calculation.operation);
-      this.model.appendToSecondNumber(calculation.secondNumber);
-      this.updateView();
-    };
-  }
+import { addToHistory } from "./calculator-history";
 
-  #OPERATIONS = ['+', '-', 'x', '*', '/', '%'];
-  #SPECIAL_KEYS = ['C', "backspace", '=', "enter", '.'];
+const OPERATIONS = ['+', '-', 'x', '/', '%'];
+const SPECIAL_KEYS = ['C', "backspace", '=', "enter", '.'];
 
-  handleClick(event) {
-    const target = event.target.textContent.trim();
-    this.view.animateButton(target);
-    this.processInput(target);
-  }
+const normalizeOperation = (operation) => {
+  return operation === '*' ? 'x' : operation;
+};
 
-  handleKeyPress(event) {
-    const target = event.key.toLowerCase();
-    this.view.animateButton(target);
-    this.processInput(target);
-  }
+export const handlePostCalculation = (value) => {
 
-  processInput(value) {
-    if (this.model.result) {
-      this.handlePostCalculation(value) 
-    } else {
-      this.handleNormalInput(value)
-    }
-    this.updateView();
-  }
+  const normalizedValue = normalizeOperation(value);
 
-  handlePostCalculation(value) {
-    const previousResult = this.model.result;
-    this.model.clear()
-
-    if (!isNaN(value)) {
-      this.model.appendToFirstNumber(value);
-    } else if (this.#OPERATIONS.includes(value)) {
-      this.model.appendToFirstNumber(previousResult);
-      this.model.setOperation(value);
-    }
-  }
-
-  handleNormalInput(value) {
-      // numbers
-  if (!isNaN(value)) {
-    if (this.model.operation === '') {
-      this.model.appendToFirstNumber(value);
-    } else {
-      this.model.appendToSecondNumber(value);
-      }
-  }
-  // operation
-  else if (this.#OPERATIONS.includes(value)) {
-    if (this.model.firstNumber !== '') {
-      this.model.setOperation(value);
-    }
-  }
-  // special
-  else if (this.#SPECIAL_KEYS.includes(value)) {
-    switch(value) {
-      case 'C':
-          this.model.clear();
-          break;
-      case "backspace":
-          this.model.delete();
-          break;
-      case "enter":
-      case '=':
-        if (this.model.firstNumber !== '' && this.model.operation !== '' && this.model.secondNumber !== '') {
-          this.model.calculate();
-          this.history.addToHistory({
-            firstNumber: this.model.firstNumber,
-            operation: this.model.operation,
-            secondNumber: this.model.secondNumber,
-            result: this.model.result
-          });
-        }
-          break;
-      case '.':
-          if (this.model.operation === '' && this.model.firstNumber !== '' && !this.model.firstNumber.includes(".")) {
-            this.model.appendToFirstNumber('.');
-          } else if (this.model.operation !== '' && this.model.secondNumber !== '' && !this.model.secondNumber.includes(".")) {
-            this.model.appendToSecondNumber('.');
-          }
-          break;
-    }
-  }
-  else {
-    if (value === "shift" || value === "meta") {
-      return;
-    }
-    alert(`Invalid input: ${value}`);
+  if (value === "shift" || value === "meta") {
     return;
-    }
   }
 
-  updateView() {
-    const currentState = {
-      firstNumber: this.model.firstNumber,
-      secondNumber: this.model.secondNumber,
-      operation: this.model.operation,
-      result: this.model.result
-    };
-    this.view.updateDisplay(currentState);
+  if (value === '.') {
+    if (!String(getResult()).includes('.')) {
+      const resultValue = getResult();
+      clear();
+      appendToFirstNumber(resultValue);
+      appendToFirstNumber('.');
+    }
+    return;
   }
-  
+
+  if (!isNaN(value)) {
+    clear();
+    appendToFirstNumber(value);
+    return;
+  }
+
+  const resultValue = getResult();
+  clear();
+  appendToFirstNumber(resultValue);
+
+  if (OPERATIONS.includes(normalizedValue)) {
+    setOperation(normalizedValue);
+  } else if (SPECIAL_KEYS.includes(normalizedValue)) {
+    handleSpecialKey(normalizedValue);
+  }
+};
+
+export const handleNormalInput = (value) => {
+  if (!isNaN(value)) {
+    if (getOperation() === '') {
+      appendToFirstNumber(value);
+    } else {
+      appendToSecondNumber(value);
+    }
+  } else {
+    const normalizedValue = normalizeOperation(value);
+    if (OPERATIONS.includes(normalizedValue)) {
+      if (getFirstNumber() !== '') {
+        setOperation(normalizedValue);
+      }
+    } else if (SPECIAL_KEYS.includes(normalizedValue)) {
+      handleSpecialKey(normalizedValue);
+    } else {
+      if (value === "shift" || value === "meta") return;
+      alert(`Invalid input: ${value}`);
+    }
+  }
+};
+
+const handleSpecialKey = (value) => {
+  switch(value) {
+  case 'C':
+    clear();
+    break;
+  case "backspace":
+    backspace();
+    break;
+  case "enter":
+  case '=':
+    if (getFirstNumber() !== '' && getOperation() !== '' && getSecondNumber() !== '') {
+      calculate();
+      addToHistory({
+        firstNumber: getFirstNumber(),
+        operation: getOperation(),
+        secondNumber: getSecondNumber(),
+        result: getResult()
+      });
+    }
+    break;
+  case '.':
+    handleDecimalInput();
+    break;
+  }
+};
+
+const handleDecimalInput = () => {
+  if (getOperation() === '' && 
+      getFirstNumber() !== '' && 
+      !getFirstNumber().includes(".")) {
+    appendToFirstNumber('.');
+  } else if (getOperation() !== '' && 
+             getSecondNumber() !== '' && 
+             !getSecondNumber().includes(".")) {
+    appendToSecondNumber('.');
+  }
 };
