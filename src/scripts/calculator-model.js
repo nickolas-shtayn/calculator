@@ -48,7 +48,7 @@ export const calculate = () => {
     break;
   case "%":
     if (num2 === 0) {
-      console.error("Cannot find module of zero");
+      console.error("Cannot find modulo of zero");
       return;
     }
     result = num1 % num2;
